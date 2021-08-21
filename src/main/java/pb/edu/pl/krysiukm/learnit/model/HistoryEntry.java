@@ -14,7 +14,7 @@ public class HistoryEntry extends AbstractEntity {
     @OneToOne
     private User user;
     @OneToOne
-    private MultiChoiceQuestion question;
+    private Question question;
     private boolean isCorrect;
     private Instant date;
 }

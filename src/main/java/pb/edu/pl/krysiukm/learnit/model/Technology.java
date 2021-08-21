@@ -1,11 +1,9 @@
 package pb.edu.pl.krysiukm.learnit.model;
 
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -13,6 +11,4 @@ import javax.persistence.OneToOne;
 public class Technology extends AbstractEntity {
     private String name;
     private String description;
-    @OneToOne
-    private Difficulty difficulty;
 }
