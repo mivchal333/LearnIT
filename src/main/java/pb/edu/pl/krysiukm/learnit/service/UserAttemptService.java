@@ -37,4 +37,8 @@ public class UserAttemptService {
         return userAttemptRepository.findById(attemptId)
                 .orElseThrow(() -> new NotFoundException("User attempt does not exist! Id:" + attemptId));
     }
+
+    public List<UserAttempt> getUserAttempts(User user) {
+        return userAttemptRepository.findAllByUser(user);
+    }
 }
