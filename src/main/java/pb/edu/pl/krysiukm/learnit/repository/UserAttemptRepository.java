@@ -7,6 +7,6 @@ import pb.edu.pl.krysiukm.learnit.model.UserAttempt;
 import java.util.List;
 
 @Repository
-public interface UserAttemptRepository extends CrudRepository<UserAttempt, Long> {
+public interface UserAttemptRepository extends CrudRepository<UserAttempt, String> {
 
 }

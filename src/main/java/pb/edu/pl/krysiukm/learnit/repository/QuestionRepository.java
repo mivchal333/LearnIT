@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface QuestionRepository extends CrudRepository<Question, Long> {
     List<Question> findAllByTechnologyAndIdNotIn(Technology technology, List<Long> questionIds);
+    List<Question> findAllByIdNotIn(List<Long> questionIds);
+    List<Question> findAllByTechnology(Technology technology);
 }

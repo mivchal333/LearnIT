@@ -2,13 +2,16 @@ package pb.edu.pl.krysiukm.learnit.controller;
 
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException;
+import pb.edu.pl.krysiukm.learnit.dto.AnswerSubmit;
 import pb.edu.pl.krysiukm.learnit.dto.QuestionDto;
+import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
 import pb.edu.pl.krysiukm.learnit.model.Difficulty;
 import pb.edu.pl.krysiukm.learnit.model.Question;
 import pb.edu.pl.krysiukm.learnit.model.Technology;
@@ -16,6 +19,7 @@ import pb.edu.pl.krysiukm.learnit.service.DifficultyService;
 import pb.edu.pl.krysiukm.learnit.service.QuestionService;
 import pb.edu.pl.krysiukm.learnit.service.TechnologyService;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/question")
@@ -44,13 +48,27 @@ public class QuestionController {
     }
 
     @GetMapping
-    public ResponseEntity<Question> getQuestion(@RequestParam Long technologyId, @RequestParam Long attemptId) {
+    public ResponseEntity<Question> getQuestion(@RequestParam Long technologyId, @RequestParam String attemptId) {
         Assert.notNull(technologyId, "You must specify technologyId");
         try {
-            Question question = questionService.getQuestion(attemptId, technologyId);
+            Question question = questionService.getNextQuestion(attemptId, technologyId);
             return ResponseEntity.ok(question);
         } catch (NotFoundException e) {
+            log.error(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @PostMapping("/answer")
+    public ResponseEntity<AnswerResult> submitAnswer(AnswerSubmit submitPayload) {
+
+        AnswerResult answer;
+        try {
+            answer = questionService.submitAnswer(submitPayload);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(answer);
     }
 }
