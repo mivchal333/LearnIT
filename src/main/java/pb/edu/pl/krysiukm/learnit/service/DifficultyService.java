@@ -15,4 +15,8 @@ public class DifficultyService {
     public Optional<Difficulty> getById(Long id) {
         return difficultyRepository.findById(id);
     }
+
+    public Difficulty create(Difficulty difficulty) {
+        return difficultyRepository.save(difficulty);
+    }
 }
