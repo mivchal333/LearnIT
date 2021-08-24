@@ -1,8 +1,11 @@
 package pb.edu.pl.krysiukm.learnit.controller;
 
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException;
 import pb.edu.pl.krysiukm.learnit.dto.QuestionDto;
@@ -38,5 +41,16 @@ public class QuestionController {
         question.setTechnology(technology);
 
         return questionService.createQuestion(question);
+    }
+
+    @GetMapping
+    public ResponseEntity<Question> getQuestion(@RequestParam Long technologyId, @RequestParam Long attemptId) {
+        Assert.notNull(technologyId, "You must specify technologyId");
+        try {
+            Question question = questionService.getQuestion(attemptId, technologyId);
+            return ResponseEntity.ok(question);
+        } catch (NotFoundException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

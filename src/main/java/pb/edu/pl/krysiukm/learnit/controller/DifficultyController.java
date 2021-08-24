@@ -1,10 +1,8 @@
 package pb.edu.pl.krysiukm.learnit.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.*;
 import pb.edu.pl.krysiukm.learnit.model.Difficulty;
 import pb.edu.pl.krysiukm.learnit.model.Technology;
 import pb.edu.pl.krysiukm.learnit.service.DifficultyService;
@@ -20,4 +18,5 @@ public class DifficultyController {
     public Difficulty create(@RequestBody Difficulty difficulty) {
         return difficultyService.create(difficulty);
     }
+
 }

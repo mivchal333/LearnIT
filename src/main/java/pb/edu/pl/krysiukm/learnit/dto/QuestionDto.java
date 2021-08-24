@@ -9,8 +9,7 @@ import java.util.List;
 @Builder
 public class QuestionDto {
     private String body;
-    private String correctAnswer;
     private Long technologyId;
     private Long difficultyId;
-    private List<String> badAnswers;
+    private List<String> answers;
 }
