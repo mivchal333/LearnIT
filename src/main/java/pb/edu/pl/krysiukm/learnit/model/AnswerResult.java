@@ -7,4 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class AnswerResult {
     private boolean isCorrect;
+    private String message;
 }

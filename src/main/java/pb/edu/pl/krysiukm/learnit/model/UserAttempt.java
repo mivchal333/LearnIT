@@ -17,7 +17,8 @@ public class UserAttempt {
 
     @Id
     @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")    private String id;
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
     @OneToMany
     private List<Question> exposedQuestions;
 
