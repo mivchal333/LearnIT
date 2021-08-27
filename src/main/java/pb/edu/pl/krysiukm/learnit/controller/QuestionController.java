@@ -40,18 +40,18 @@ public class QuestionController {
                 .orElseThrow(ResourceNotFoundException::new);
         question.setDifficulty(difficulty);
 
-        Technology technology = technologyService.getById(questionDto.getTechnologyId())
-                .orElseThrow(ResourceNotFoundException::new);
+        Technology technology = technologyService.getById(questionDto.getTechnologyId());
+
         question.setTechnology(technology);
 
         return questionService.createQuestion(question);
     }
 
     @GetMapping
-    public ResponseEntity<Question> getQuestion(@RequestParam Long technologyId, @RequestParam String attemptId) {
-        Assert.notNull(technologyId, "You must specify technologyId");
+    public ResponseEntity<Question> getQuestion(@RequestParam String attemptId) {
+        Assert.notNull(attemptId, "You must specify attemptId");
         try {
-            Question question = questionService.getNextQuestion(attemptId, technologyId);
+            Question question = questionService.getNextQuestion(attemptId);
             return ResponseEntity.ok(question);
         } catch (NotFoundException e) {
             log.error(e.getMessage());

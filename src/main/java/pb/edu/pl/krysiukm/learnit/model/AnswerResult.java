@@ -8,4 +8,8 @@ import lombok.Data;
 public class AnswerResult {
     private boolean isCorrect;
     private String message;
+
+    public AnswerResult(boolean isCorrect) {
+        this.isCorrect = isCorrect;
+    }
 }

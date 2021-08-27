@@ -4,19 +4,25 @@ import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pb.edu.pl.krysiukm.learnit.model.Question;
+import pb.edu.pl.krysiukm.learnit.model.Technology;
 import pb.edu.pl.krysiukm.learnit.model.User;
 import pb.edu.pl.krysiukm.learnit.model.UserAttempt;
 import pb.edu.pl.krysiukm.learnit.repository.UserAttemptRepository;
 
+import java.time.Clock;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class UserAttemptService {
+    private final Clock clock;
     private final UserAttemptRepository userAttemptRepository;
+    private final TechnologyService technologyService;
 
-    public UserAttempt startAttempt(User user) {
-        UserAttempt attempt = new UserAttempt(user);
+    public UserAttempt startAttempt(User user, Long technologyId) {
+        Technology technology = technologyService.getById(technologyId);
+        UserAttempt attempt = new UserAttempt(user, technology);
+        attempt.setStartDate(clock.instant());
         return userAttemptRepository.save(attempt);
     }
 
@@ -33,9 +39,9 @@ public class UserAttemptService {
         userAttemptRepository.save(userAttempt);
     }
 
-    private UserAttempt getUserAttempt(String attemptId) throws NotFoundException {
-        return userAttemptRepository.findById(attemptId)
-                .orElseThrow(() -> new NotFoundException("User attempt does not exist! Id:" + attemptId));
+    public UserAttempt getUserAttempt(String id) throws NotFoundException {
+        return userAttemptRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User attempt does not exist! Id:" + id));
     }
 
     public List<UserAttempt> getUserAttempts(User user) {

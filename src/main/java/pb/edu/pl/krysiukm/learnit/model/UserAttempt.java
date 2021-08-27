@@ -2,11 +2,11 @@ package pb.edu.pl.krysiukm.learnit.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +25,14 @@ public class UserAttempt {
     @JsonIgnore
     @OneToOne
     private User user;
+    private Instant startDate;
 
-    public UserAttempt(User user) {
+    @OneToOne
+    private Technology technology;
+
+    public UserAttempt(User user, Technology technology) {
         this.user = user;
         this.exposedQuestions = new ArrayList<>();
+        this.technology = technology;
     }
 }

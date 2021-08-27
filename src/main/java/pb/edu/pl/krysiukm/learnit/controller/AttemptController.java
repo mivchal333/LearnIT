@@ -2,10 +2,7 @@ package pb.edu.pl.krysiukm.learnit.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pb.edu.pl.krysiukm.learnit.model.User;
 import pb.edu.pl.krysiukm.learnit.model.UserAttempt;
 import pb.edu.pl.krysiukm.learnit.repository.UserRepository;
@@ -21,10 +18,10 @@ public class AttemptController {
     private final UserRepository userRepository;
 
     @PostMapping
-    public ResponseEntity<UserAttempt> startAttempt() {
+    public ResponseEntity<UserAttempt> startAttempt(@RequestParam Long technologyId) {
         // TODO: get user from security context
         User user = userRepository.findAll().iterator().next();
-        UserAttempt attempt = userAttemptService.startAttempt(user);
+        UserAttempt attempt = userAttemptService.startAttempt(user, technologyId);
         return ResponseEntity.ok(attempt);
     }
 
