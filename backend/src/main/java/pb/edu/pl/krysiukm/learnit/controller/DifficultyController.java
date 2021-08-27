@@ -1,12 +1,9 @@
 package pb.edu.pl.krysiukm.learnit.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import pb.edu.pl.krysiukm.learnit.model.Difficulty;
-import pb.edu.pl.krysiukm.learnit.model.Technology;
 import pb.edu.pl.krysiukm.learnit.service.DifficultyService;
-import pb.edu.pl.krysiukm.learnit.service.TechnologyService;
 
 @RequiredArgsConstructor
 @RequestMapping("/difficulty")
