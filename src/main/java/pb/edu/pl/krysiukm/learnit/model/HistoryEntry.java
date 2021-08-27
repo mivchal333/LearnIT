@@ -12,9 +12,9 @@ import java.time.Instant;
 @Entity
 public class HistoryEntry extends AbstractEntity {
     @OneToOne
-    private User user;
+    private UserAttempt userAttempt;
     @OneToOne
     private Question question;
-    private boolean isCorrect;
+    private Boolean answerResult;
     private Instant date;
 }

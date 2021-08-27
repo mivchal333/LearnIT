@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pb.edu.pl.krysiukm.learnit.dto.AnswerSubmit;
-import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
-import pb.edu.pl.krysiukm.learnit.model.Question;
-import pb.edu.pl.krysiukm.learnit.model.Technology;
-import pb.edu.pl.krysiukm.learnit.model.UserAttempt;
+import pb.edu.pl.krysiukm.learnit.model.*;
 import pb.edu.pl.krysiukm.learnit.repository.QuestionRepository;
 
 import java.util.List;
@@ -21,6 +18,8 @@ import java.util.stream.Collectors;
 public class QuestionService {
     private final QuestionRepository questionRepository;
     private final UserAttemptService userAttemptService;
+    private final ShowedQuestionService showedQuestionService;
+
 
     public Question createQuestion(Question question) {
         return questionRepository.save(question);
@@ -57,12 +56,17 @@ public class QuestionService {
         return randomQuestion;
     }
 
+
     public AnswerResult submitAnswer(AnswerSubmit submitPayload) throws NotFoundException {
-        Long questionId = submitPayload.getQuestionId();
-        Question question = questionRepository.findById(questionId).orElseThrow(() -> new NotFoundException("Question does not exist! Id: " + questionId));
+        String attemptId = submitPayload.getAttemptId();
+        UserAttempt userAttempt = userAttemptService.getUserAttempt(attemptId);
+
+        ShowedQuestion lastShowedUserQuestion = showedQuestionService.getLastShowedUserQuestion(userAttempt);
+
+        Question lastUserQuestion = lastShowedUserQuestion.getQuestion();
 
         String userAnswer = submitPayload.getAnswer();
-        String correctAnswer = question.getCorrectAnswer();
+        String correctAnswer = lastUserQuestion.getCorrectAnswer();
 
         if (correctAnswer.equals(userAnswer)) {
             return new AnswerResult(true);

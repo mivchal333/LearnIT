@@ -48,14 +48,14 @@ public class QuestionController {
     }
 
     @GetMapping
-    public ResponseEntity<Question> getQuestion(@RequestParam String attemptId) {
+    public ResponseEntity<?> getQuestion(@RequestParam String attemptId) {
         Assert.notNull(attemptId, "You must specify attemptId");
         try {
             Question question = questionService.getNextQuestion(attemptId);
             return ResponseEntity.ok(question);
         } catch (NotFoundException e) {
             log.error(e.getMessage());
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

@@ -5,6 +5,5 @@ import lombok.Data;
 @Data
 public class AnswerSubmit {
     private String attemptId;
-    private Long questionId;
     private String answer;
 }
