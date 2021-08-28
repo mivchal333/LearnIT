@@ -1,12 +1,11 @@
 package pb.edu.pl.krysiukm.learnit.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pb.edu.pl.krysiukm.learnit.model.Technology;
 import pb.edu.pl.krysiukm.learnit.service.TechnologyService;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/technology")
@@ -17,5 +16,10 @@ public class TechnologyController {
     @PostMapping
     public Technology create(@RequestBody Technology technology) {
         return technologyService.create(technology);
+    }
+
+    @GetMapping
+    public List<Technology> getAllTechnologies() {
+        return technologyService.getAll();
     }
 }

@@ -5,7 +5,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
-import HomePage from "./main/HomePage";
+import HomePage from "./components/main/HomePage";
 
 const App = () => {
 

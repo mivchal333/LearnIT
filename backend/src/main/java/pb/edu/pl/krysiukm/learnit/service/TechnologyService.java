@@ -6,6 +6,8 @@ import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException
 import pb.edu.pl.krysiukm.learnit.model.Technology;
 import pb.edu.pl.krysiukm.learnit.repository.TechnologyRepository;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class TechnologyService {
@@ -17,5 +19,9 @@ public class TechnologyService {
 
     public Technology create(Technology technology) {
         return technologyRepository.save(technology);
+    }
+
+    public List<Technology> getAll() {
+        return technologyRepository.findAll();
     }
 }

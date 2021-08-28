@@ -13,6 +13,4 @@ import java.util.List;
 public class Technology extends AbstractEntity {
     private String name;
     private String description;
-    @OneToMany
-    private List<Question> questions;
 }

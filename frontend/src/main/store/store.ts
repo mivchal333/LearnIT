@@ -1,5 +1,6 @@
 import {configureStore} from "@reduxjs/toolkit";
-import questionsReducer from './questionsSlice'
+import questionsReducer from './questions/questions.slice'
+import {useDispatch as useOriginalDispatch} from "react-redux";
 
 const store = configureStore({
     reducer: {
@@ -7,5 +8,8 @@ const store = configureStore({
     },
 })
 export type RootState = ReturnType<typeof store.getState>
+
+export type Dispatch = typeof store.dispatch
+export const useDispatch = () => useOriginalDispatch<Dispatch>()
 
 export default store

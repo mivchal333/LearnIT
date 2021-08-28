@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {Question} from "../api/model/Question.model";
+import {Question} from "../../api/model/Question.model";
 
 
 interface QuestionsSlice {
@@ -19,6 +19,7 @@ const questionsSlice = createSlice({
         }
     }
 })
+export const {setQuestions} = questionsSlice.actions
 
-
+export const selectQuestions = (state: QuestionsSlice) => state.questions
 export default questionsSlice.reducer;
