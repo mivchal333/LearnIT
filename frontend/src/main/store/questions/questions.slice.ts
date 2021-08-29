@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {Question} from "../../api/model/Question.model";
+import {RootState} from "../store";
 
 
 interface QuestionsSlice {
@@ -21,5 +22,5 @@ const questionsSlice = createSlice({
 })
 export const {setQuestions} = questionsSlice.actions
 
-export const selectQuestions = (state: QuestionsSlice) => state.questions
+export const selectQuestions = (state: RootState) => state.questions.questions
 export default questionsSlice.reducer;

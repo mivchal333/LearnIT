@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {Technology} from "../../api/model/Technology.model";
+import {RootState} from "../store";
 
 
 interface TechnologiesSlice {
@@ -21,5 +22,5 @@ const technologiesSlice = createSlice({
 })
 export const {setTechnologies} = technologiesSlice.actions
 
-export const selectTechnologies = (state: TechnologiesSlice) => state.technologies
+export const selectTechnologies = (state: RootState) => state.technologies.technologies
 export default technologiesSlice.reducer;
