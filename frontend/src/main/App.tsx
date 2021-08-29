@@ -1,8 +1,9 @@
 import React from 'react';
 import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
 import HomePage from "./components/main/HomePage";
-import {ROUTE} from "./constant/routes";
+import {ROUTE} from "./route/routes";
 import TechnologiesList from "./components/technologies/technologiesList";
+import TechnologyDetails from "./components/technologies/technologyDetails";
 
 const App = () => {
 
@@ -25,7 +26,10 @@ const App = () => {
                     </ul>
                 </nav>
                 <Switch>
-                    <Route path={ROUTE.TECHNOLOGIES}>
+                    <Route path={ROUTE.TECHNOLOGY + ":id"}>
+                        <TechnologyDetails/>
+                    </Route>
+                    <Route path={ROUTE.TECHNOLOGIES} exact>
                         <TechnologiesList/>
                     </Route>
                     <Route path="/">

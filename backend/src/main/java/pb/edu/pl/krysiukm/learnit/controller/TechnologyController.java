@@ -22,4 +22,9 @@ public class TechnologyController {
     public List<Technology> getAllTechnologies() {
         return technologyService.getAll();
     }
+
+    @GetMapping("/{id}")
+    public Technology getTechnology(@PathVariable Long id) {
+        return technologyService.getById(id);
+    }
 }
