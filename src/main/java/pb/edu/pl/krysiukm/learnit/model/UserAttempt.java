@@ -1,8 +1,9 @@
 package pb.edu.pl.krysiukm.learnit.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,7 +11,8 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 public class UserAttempt {
@@ -20,6 +22,7 @@ public class UserAttempt {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     @OneToMany
+    @JsonIgnore
     private List<Question> exposedQuestions;
 
     @JsonIgnore

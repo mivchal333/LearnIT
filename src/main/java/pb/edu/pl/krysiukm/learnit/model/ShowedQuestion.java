@@ -1,11 +1,14 @@
 package pb.edu.pl.krysiukm.learnit.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.Instant;
 
-@Data
+@Getter
+@Setter
 @Entity
 public class ShowedQuestion {
     @Id
