@@ -3,14 +3,12 @@ package pb.edu.pl.krysiukm.learnit.service;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pb.edu.pl.krysiukm.learnit.entity.Question;
-import pb.edu.pl.krysiukm.learnit.entity.Technology;
-import pb.edu.pl.krysiukm.learnit.entity.User;
-import pb.edu.pl.krysiukm.learnit.entity.UserAttempt;
+import pb.edu.pl.krysiukm.learnit.entity.*;
 import pb.edu.pl.krysiukm.learnit.repository.UserAttemptRepository;
 
 import java.time.Clock;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,13 +26,17 @@ public class UserAttemptService {
 
     public List<Question> getExposedQuestions(String attemptId) throws NotFoundException {
         UserAttempt userAttempt = getUserAttempt(attemptId);
-        return userAttempt.getExposedQuestions();
+        return userAttempt.getHistoryEntries().stream()
+                .map(HistoryEntry::getQuestion)
+                .collect(Collectors.toList());
     }
 
-    public void addExposedQuestion(String attemptId, Question newQuestion) throws NotFoundException {
+    public void addHistoryEntry(String attemptId, Question newQuestion, Boolean result) throws NotFoundException {
         UserAttempt userAttempt = this.getUserAttempt(attemptId);
 
-        userAttempt.getExposedQuestions().add(newQuestion);
+        HistoryEntry historyEntry = new HistoryEntry(newQuestion, result, clock.instant());
+
+        userAttempt.getHistoryEntries().add(historyEntry);
 
         userAttemptRepository.save(userAttempt);
     }

@@ -6,10 +6,10 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class AnswerResult {
-    private boolean isCorrect;
+    private Boolean correct;
     private String message;
 
-    public AnswerResult(boolean isCorrect) {
-        this.isCorrect = isCorrect;
+    public AnswerResult(boolean correct) {
+        this.correct = correct;
     }
 }

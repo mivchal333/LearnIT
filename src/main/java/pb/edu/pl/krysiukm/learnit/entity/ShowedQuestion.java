@@ -1,6 +1,7 @@
 package pb.edu.pl.krysiukm.learnit.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.time.Instant;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 public class ShowedQuestion {
     @Id
@@ -18,6 +20,13 @@ public class ShowedQuestion {
     private Question question;
 
     @OneToOne
+    @JoinColumn(unique = true)
     private UserAttempt userAttempt;
     private Instant date;
+
+    public ShowedQuestion(Question question, UserAttempt userAttempt, Instant date) {
+        this.question = question;
+        this.userAttempt = userAttempt;
+        this.date = date;
+    }
 }

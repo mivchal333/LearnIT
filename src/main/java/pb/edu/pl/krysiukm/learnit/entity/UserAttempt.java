@@ -22,9 +22,9 @@ public class UserAttempt {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Question> exposedQuestions;
+    private List<HistoryEntry> historyEntries;
 
     @JsonIgnore
     @ManyToOne
@@ -39,7 +39,7 @@ public class UserAttempt {
 
     public UserAttempt(User user, Technology technology) {
         this.user = user;
-        this.exposedQuestions = new ArrayList<>();
+        this.historyEntries = new ArrayList<>();
         this.technology = technology;
     }
 }

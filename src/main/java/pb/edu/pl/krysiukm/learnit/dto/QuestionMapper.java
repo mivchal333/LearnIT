@@ -7,16 +7,17 @@ import pb.edu.pl.krysiukm.learnit.entity.Question;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class QuestionMapper {
 
     public QuestionRequestResponseDto mapToDto(Question entity) {
-        List<String> answers = entity.getBadAnswers().stream()
-                .map(Answer::getBody)
+        List<Answer> answers = Stream.concat(
+                        entity.getBadAnswers().stream(),
+                        Stream.of(entity.getCorrectAnswer()))
                 .collect(Collectors.toList());
 
-        answers.add(entity.getCorrectAnswer().getBody());
         Collections.shuffle(answers);
         return QuestionRequestResponseDto.builder()
                 .body(entity.getBody())

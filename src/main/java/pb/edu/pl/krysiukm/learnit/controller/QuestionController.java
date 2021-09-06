@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import pb.edu.pl.krysiukm.learnit.dto.AnswerSubmit;
 import pb.edu.pl.krysiukm.learnit.dto.QuestionCreateRequestDto;
 import pb.edu.pl.krysiukm.learnit.dto.QuestionRequestResponseDto;
-import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
 import pb.edu.pl.krysiukm.learnit.entity.Question;
+import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
 import pb.edu.pl.krysiukm.learnit.service.DifficultyService;
 import pb.edu.pl.krysiukm.learnit.service.QuestionService;
 import pb.edu.pl.krysiukm.learnit.service.TechnologyService;
@@ -52,7 +52,7 @@ public class QuestionController {
     }
 
     @PostMapping("/answer")
-    public ResponseEntity<AnswerResult> submitAnswer(AnswerSubmit submitPayload) {
+    public ResponseEntity<AnswerResult> submitAnswer(@RequestBody AnswerSubmit submitPayload) {
         AnswerResult answer;
         try {
             answer = questionService.submitAnswer(submitPayload);

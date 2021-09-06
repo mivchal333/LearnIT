@@ -16,7 +16,7 @@ public class Question {
 
     private String body;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Answer correctAnswer;
 
     @ManyToOne
@@ -27,7 +27,7 @@ public class Question {
     private Difficulty difficulty;
 
     @JoinColumn(name = "QUESTION_ID")
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Answer> badAnswers;
 }
 

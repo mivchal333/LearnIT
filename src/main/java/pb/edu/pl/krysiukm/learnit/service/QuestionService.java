@@ -9,14 +9,12 @@ import pb.edu.pl.krysiukm.learnit.dto.QuestionCreateRequestDto;
 import pb.edu.pl.krysiukm.learnit.dto.QuestionMapper;
 import pb.edu.pl.krysiukm.learnit.dto.QuestionRequestResponseDto;
 import pb.edu.pl.krysiukm.learnit.entity.*;
-import pb.edu.pl.krysiukm.learnit.model.*;
+import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
 import pb.edu.pl.krysiukm.learnit.repository.QuestionRepository;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -79,7 +77,7 @@ public class QuestionService {
 
         Question randomQuestion = foundQuestions.get(randomIndex);
 
-        userAttemptService.addExposedQuestion(attemptId, randomQuestion);
+        showedQuestionService.showQuestion(userAttempt, randomQuestion);
 
         return questionMapper.mapToDto(randomQuestion);
     }
@@ -89,7 +87,9 @@ public class QuestionService {
         String attemptId = submitPayload.getAttemptId();
         UserAttempt userAttempt = userAttemptService.getUserAttempt(attemptId);
 
-        ShowedQuestion lastShowedUserQuestion = showedQuestionService.getLastShowedUserQuestion(userAttempt);
+        ShowedQuestion lastShowedUserQuestion = showedQuestionService.getLastShowedQuestion(userAttempt);
+
+        showedQuestionService.deleteShowedQuestion(lastShowedUserQuestion);
 
         Question lastUserQuestion = lastShowedUserQuestion.getQuestion();
 
@@ -97,8 +97,10 @@ public class QuestionService {
         Answer correctAnswer = lastUserQuestion.getCorrectAnswer();
 
         if (correctAnswer.getId().equals(userAnswerId)) {
+            userAttemptService.addHistoryEntry(attemptId, lastUserQuestion, true);
             return new AnswerResult(true);
         }
-        return new AnswerResult(false);
+        userAttemptService.addHistoryEntry(attemptId, lastUserQuestion, false);
+        return new AnswerResult(false, "Bad answer");
     }
 }
