@@ -7,9 +7,10 @@ import java.util.List;
 
 @Data
 @Builder
-public class QuestionDto {
+public class QuestionCreateRequestDto {
     private String body;
     private Long technologyId;
     private Long difficultyId;
-    private List<String> answers;
+    private String correctAnswer;
+    private List<String> badAnswers;
 }

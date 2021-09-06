@@ -2,7 +2,7 @@ package pb.edu.pl.krysiukm.learnit.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import pb.edu.pl.krysiukm.learnit.model.Technology;
+import pb.edu.pl.krysiukm.learnit.entity.Technology;
 import pb.edu.pl.krysiukm.learnit.service.TechnologyService;
 
 import java.util.List;

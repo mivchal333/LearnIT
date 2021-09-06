@@ -2,7 +2,7 @@ package pb.edu.pl.krysiukm.learnit.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import pb.edu.pl.krysiukm.learnit.model.Difficulty;
+import pb.edu.pl.krysiukm.learnit.entity.Difficulty;
 import pb.edu.pl.krysiukm.learnit.service.DifficultyService;
 
 @RequiredArgsConstructor

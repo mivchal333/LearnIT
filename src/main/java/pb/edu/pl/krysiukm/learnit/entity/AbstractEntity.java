@@ -1,4 +1,4 @@
-package pb.edu.pl.krysiukm.learnit.model;
+package pb.edu.pl.krysiukm.learnit.entity;
 
 import lombok.Getter;
 import lombok.Setter;

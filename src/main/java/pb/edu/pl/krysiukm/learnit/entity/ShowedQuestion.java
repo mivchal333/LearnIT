@@ -1,6 +1,5 @@
-package pb.edu.pl.krysiukm.learnit.model;
+package pb.edu.pl.krysiukm.learnit.entity;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,11 +12,11 @@ import java.time.Instant;
 public class ShowedQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @OneToOne
+    private Long id;
+
+    @ManyToOne
     private Question question;
-    @OneToOne
-    private User user;
+
     @OneToOne
     private UserAttempt userAttempt;
     private Instant date;

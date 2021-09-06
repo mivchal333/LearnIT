@@ -5,12 +5,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pb.edu.pl.krysiukm.learnit.dto.AnswerSubmit;
+import pb.edu.pl.krysiukm.learnit.dto.QuestionCreateRequestDto;
+import pb.edu.pl.krysiukm.learnit.dto.QuestionMapper;
+import pb.edu.pl.krysiukm.learnit.dto.QuestionRequestResponseDto;
+import pb.edu.pl.krysiukm.learnit.entity.*;
 import pb.edu.pl.krysiukm.learnit.model.*;
 import pb.edu.pl.krysiukm.learnit.repository.QuestionRepository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -19,13 +25,36 @@ public class QuestionService {
     private final QuestionRepository questionRepository;
     private final UserAttemptService userAttemptService;
     private final ShowedQuestionService showedQuestionService;
+    private final DifficultyService difficultyService;
+    private final TechnologyService technologyService;
+    private final QuestionMapper questionMapper;
 
+    public Question createQuestion(QuestionCreateRequestDto createRequestDto) {
+        Question question = new Question();
+        question.setBody(createRequestDto.getBody());
+
+        Answer correctAnswer = new Answer(createRequestDto.getCorrectAnswer());
+        question.setCorrectAnswer(correctAnswer);
+
+        Technology technology = technologyService.getById(createRequestDto.getTechnologyId());
+        question.setTechnology(technology);
+
+        Difficulty difficulty = difficultyService.getById(createRequestDto.getDifficultyId());
+        question.setDifficulty(difficulty);
+
+        List<Answer> badAnswers = createRequestDto.getBadAnswers().stream()
+                .map(Answer::new)
+                .collect(Collectors.toList());
+
+        question.setBadAnswers(badAnswers);
+        return createQuestion(question);
+    }
 
     public Question createQuestion(Question question) {
         return questionRepository.save(question);
     }
 
-    public Question getNextQuestion(String attemptId) throws NotFoundException {
+    public QuestionRequestResponseDto getNextQuestion(String attemptId) throws NotFoundException {
         UserAttempt userAttempt = userAttemptService.getUserAttempt(attemptId);
 
         List<Long> exposedQuestionsIds = userAttemptService.getExposedQuestions(attemptId)
@@ -35,14 +64,13 @@ public class QuestionService {
         Technology technology = userAttempt.getTechnology();
 
         List<Question> foundQuestions;
-        if (exposedQuestionsIds.isEmpty()) {
+        if (true) {
             foundQuestions = questionRepository.findAllByTechnology(technology);
         } else {
             foundQuestions = questionRepository.findAllByTechnologyAndIdNotIn(technology, exposedQuestionsIds);
         }
 
         if (foundQuestions.isEmpty()) {
-            log.warn("No more questions!");
             throw new NotFoundException("No more questions!");
         }
 
@@ -53,7 +81,7 @@ public class QuestionService {
 
         userAttemptService.addExposedQuestion(attemptId, randomQuestion);
 
-        return randomQuestion;
+        return questionMapper.mapToDto(randomQuestion);
     }
 
 
@@ -65,10 +93,10 @@ public class QuestionService {
 
         Question lastUserQuestion = lastShowedUserQuestion.getQuestion();
 
-        String userAnswer = submitPayload.getAnswer();
-        String correctAnswer = lastUserQuestion.getCorrectAnswer();
+        Long userAnswerId = submitPayload.getAnswerId();
+        Answer correctAnswer = lastUserQuestion.getCorrectAnswer();
 
-        if (correctAnswer.equals(userAnswer)) {
+        if (correctAnswer.getId().equals(userAnswerId)) {
             return new AnswerResult(true);
         }
         return new AnswerResult(false);

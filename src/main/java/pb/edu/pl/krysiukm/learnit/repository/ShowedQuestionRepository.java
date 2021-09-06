@@ -1,8 +1,8 @@
 package pb.edu.pl.krysiukm.learnit.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import pb.edu.pl.krysiukm.learnit.model.ShowedQuestion;
-import pb.edu.pl.krysiukm.learnit.model.UserAttempt;
+import pb.edu.pl.krysiukm.learnit.entity.ShowedQuestion;
+import pb.edu.pl.krysiukm.learnit.entity.UserAttempt;
 
 import java.util.Optional;
 

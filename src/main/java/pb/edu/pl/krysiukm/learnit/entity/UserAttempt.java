@@ -1,4 +1,4 @@
-package pb.edu.pl.krysiukm.learnit.model;
+package pb.edu.pl.krysiukm.learnit.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -21,17 +21,21 @@ public class UserAttempt {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    @OneToMany
+
+    @ManyToMany
     @JsonIgnore
     private List<Question> exposedQuestions;
 
     @JsonIgnore
-    @OneToOne
+    @ManyToOne
     private User user;
+
+    @ManyToOne
+    private Technology technology;
+
     private Instant startDate;
 
-    @OneToOne
-    private Technology technology;
+    private Instant endDate;
 
     public UserAttempt(User user, Technology technology) {
         this.user = user;

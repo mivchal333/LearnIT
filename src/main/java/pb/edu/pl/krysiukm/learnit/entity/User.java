@@ -1,11 +1,10 @@
-package pb.edu.pl.krysiukm.learnit.model;
+package pb.edu.pl.krysiukm.learnit.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.util.Set;
 
@@ -17,5 +16,6 @@ public class User extends AbstractEntity {
     private String password;
     private String mail;
     @OneToMany
+    @JoinColumn
     private Set<Role> roles;
 }

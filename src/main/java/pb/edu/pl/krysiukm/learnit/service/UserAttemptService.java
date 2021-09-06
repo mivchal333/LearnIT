@@ -3,10 +3,10 @@ package pb.edu.pl.krysiukm.learnit.service;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pb.edu.pl.krysiukm.learnit.model.Question;
-import pb.edu.pl.krysiukm.learnit.model.Technology;
-import pb.edu.pl.krysiukm.learnit.model.User;
-import pb.edu.pl.krysiukm.learnit.model.UserAttempt;
+import pb.edu.pl.krysiukm.learnit.entity.Question;
+import pb.edu.pl.krysiukm.learnit.entity.Technology;
+import pb.edu.pl.krysiukm.learnit.entity.User;
+import pb.edu.pl.krysiukm.learnit.entity.UserAttempt;
 import pb.edu.pl.krysiukm.learnit.repository.UserAttemptRepository;
 
 import java.time.Clock;

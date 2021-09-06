@@ -2,8 +2,8 @@ package pb.edu.pl.krysiukm.learnit.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import pb.edu.pl.krysiukm.learnit.model.Question;
-import pb.edu.pl.krysiukm.learnit.model.Technology;
+import pb.edu.pl.krysiukm.learnit.entity.Question;
+import pb.edu.pl.krysiukm.learnit.entity.Technology;
 
 import java.util.List;
 

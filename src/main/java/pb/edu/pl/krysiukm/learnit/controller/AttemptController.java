@@ -3,8 +3,8 @@ package pb.edu.pl.krysiukm.learnit.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pb.edu.pl.krysiukm.learnit.model.User;
-import pb.edu.pl.krysiukm.learnit.model.UserAttempt;
+import pb.edu.pl.krysiukm.learnit.entity.User;
+import pb.edu.pl.krysiukm.learnit.entity.UserAttempt;
 import pb.edu.pl.krysiukm.learnit.repository.UserRepository;
 import pb.edu.pl.krysiukm.learnit.service.UserAttemptService;
 
