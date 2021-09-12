@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import pb.edu.pl.krysiukm.learnit.dto.AnswerSubmit;
 import pb.edu.pl.krysiukm.learnit.dto.QuestionCreateRequestDto;
 import pb.edu.pl.krysiukm.learnit.dto.QuestionMapper;
-import pb.edu.pl.krysiukm.learnit.dto.QuestionRequestResponseDto;
 import pb.edu.pl.krysiukm.learnit.entity.*;
 import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
 import pb.edu.pl.krysiukm.learnit.repository.QuestionRepository;
@@ -52,7 +51,7 @@ public class QuestionService {
         return questionRepository.save(question);
     }
 
-    public QuestionRequestResponseDto getNextQuestion(String attemptId) throws NotFoundException {
+    public Question getNextQuestion(String attemptId) throws NotFoundException {
         UserAttempt userAttempt = userAttemptService.getUserAttempt(attemptId);
 
         List<Long> exposedQuestionsIds = userAttemptService.getExposedQuestions(attemptId)
@@ -79,7 +78,7 @@ public class QuestionService {
 
         showedQuestionService.showQuestion(userAttempt, randomQuestion);
 
-        return questionMapper.mapToDto(randomQuestion);
+        return randomQuestion;
     }
 
 

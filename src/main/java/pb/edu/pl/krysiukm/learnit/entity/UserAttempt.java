@@ -8,7 +8,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -37,9 +36,17 @@ public class UserAttempt {
 
     private Instant endDate;
 
-    public UserAttempt(User user, Technology technology) {
+    @Enumerated(EnumType.STRING)
+    private GameType gameType;
+
+    public UserAttempt(User user, Technology technology, GameType gameType) {
         this.user = user;
-        this.historyEntries = new ArrayList<>();
         this.technology = technology;
+        this.gameType = gameType;
+    }
+
+    public enum GameType {
+        QUIZ,
+        CARDS
     }
 }

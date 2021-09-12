@@ -21,7 +21,7 @@ public class AttemptController {
     public ResponseEntity<UserAttempt> startAttempt(@RequestParam Long technologyId) {
         // TODO: get user from security context
         User user = userRepository.findAll().iterator().next();
-        UserAttempt attempt = userAttemptService.startAttempt(user, technologyId);
+        UserAttempt attempt = userAttemptService.startQuizAttempt(user, technologyId);
         return ResponseEntity.ok(attempt);
     }
 

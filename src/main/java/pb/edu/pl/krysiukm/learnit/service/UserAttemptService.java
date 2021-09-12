@@ -17,9 +17,9 @@ public class UserAttemptService {
     private final UserAttemptRepository userAttemptRepository;
     private final TechnologyService technologyService;
 
-    public UserAttempt startAttempt(User user, Long technologyId) {
+    public UserAttempt startQuizAttempt(User user, Long technologyId) {
         Technology technology = technologyService.getById(technologyId);
-        UserAttempt attempt = new UserAttempt(user, technology);
+        UserAttempt attempt = new UserAttempt(user, technology, UserAttempt.GameType.QUIZ);
         attempt.setStartDate(clock.instant());
         return userAttemptRepository.save(attempt);
     }

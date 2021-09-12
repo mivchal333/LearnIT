@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import pb.edu.pl.krysiukm.learnit.dto.AnswerSubmit;
 import pb.edu.pl.krysiukm.learnit.dto.QuestionCreateRequestDto;
+import pb.edu.pl.krysiukm.learnit.dto.QuestionMapper;
 import pb.edu.pl.krysiukm.learnit.dto.QuestionRequestResponseDto;
 import pb.edu.pl.krysiukm.learnit.entity.Question;
 import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
@@ -27,6 +28,7 @@ public class QuestionController {
     private final DifficultyService difficultyService;
     private final TechnologyService technologyService;
     private final ModelMapper modelMapper;
+    private final QuestionMapper questionMapper;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
@@ -43,8 +45,9 @@ public class QuestionController {
     public ResponseEntity<?> getQuestion(@RequestParam String attemptId) {
         Assert.notNull(attemptId, "You must specify attemptId");
         try {
-            QuestionRequestResponseDto question = questionService.getNextQuestion(attemptId);
-            return ResponseEntity.ok(question);
+            Question question = questionService.getNextQuestion(attemptId);
+            QuestionRequestResponseDto questionDto = questionMapper.mapToDto(question);
+            return ResponseEntity.ok(questionDto);
         } catch (NotFoundException e) {
             log.error(e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
