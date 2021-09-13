@@ -3,6 +3,7 @@ package pb.edu.pl.krysiukm.learnit.dto;
 import org.springframework.stereotype.Component;
 import pb.edu.pl.krysiukm.learnit.entity.Answer;
 import pb.edu.pl.krysiukm.learnit.entity.Question;
+import pb.edu.pl.krysiukm.learnit.model.ProgressWrapper;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,18 +13,20 @@ import java.util.stream.Stream;
 @Component
 public class QuestionMapper {
 
-    public QuestionRequestResponseDto mapToDto(Question entity) {
+    public QuestionRequestResponseDto mapToDto(ProgressWrapper<Question> entity) {
+        Question question = entity.getEntry();
         List<Answer> answers = Stream.concat(
-                        entity.getBadAnswers().stream(),
-                        Stream.of(entity.getCorrectAnswer()))
+                        question.getBadAnswers().stream(),
+                        Stream.of(question.getCorrectAnswer()))
                 .collect(Collectors.toList());
 
         Collections.shuffle(answers);
+
         return QuestionRequestResponseDto.builder()
-                .body(entity.getBody())
+                .body(question.getBody())
                 .answers(answers)
-                .difficultyId(entity.getDifficulty().getId())
-                .technologyId(entity.getTechnology().getId())
+                .difficultyId(question.getDifficulty().getId())
+                .technologyId(question.getTechnology().getId())
                 .build();
     }
 }

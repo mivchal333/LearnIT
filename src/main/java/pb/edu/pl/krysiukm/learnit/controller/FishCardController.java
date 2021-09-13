@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pb.edu.pl.krysiukm.learnit.dto.FishCardDto;
 import pb.edu.pl.krysiukm.learnit.dto.FishCardMapper;
+import pb.edu.pl.krysiukm.learnit.dto.GameProgressWrapper;
 import pb.edu.pl.krysiukm.learnit.entity.Question;
+import pb.edu.pl.krysiukm.learnit.model.ProgressWrapper;
 import pb.edu.pl.krysiukm.learnit.service.QuestionService;
 
 @RequiredArgsConstructor
@@ -25,11 +27,13 @@ public class FishCardController {
         Assert.notNull(attemptId, "You must specify attemptId");
 
         try {
-            Question question = questionService.getNextQuestion(attemptId);
-            FishCardDto fishCardDto = fishCardMapper.mapToDto(question);
-            return ResponseEntity.ok(fishCardDto);
+            ProgressWrapper<Question> nextQuestionProgress = questionService.getNextQuestion(attemptId);
+            FishCardDto fishCardDto = fishCardMapper.mapToDto(nextQuestionProgress);
+            GameProgressWrapper<FishCardDto> fishCardDtoProgress = new GameProgressWrapper<>(nextQuestionProgress, fishCardDto);
+
+            return ResponseEntity.ok(fishCardDtoProgress);
         } catch (NotFoundException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.noContent().build();
         }
     }
 }

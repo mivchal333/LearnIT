@@ -9,7 +9,9 @@ import pb.edu.pl.krysiukm.learnit.dto.QuestionCreateRequestDto;
 import pb.edu.pl.krysiukm.learnit.dto.QuestionMapper;
 import pb.edu.pl.krysiukm.learnit.entity.*;
 import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
+import pb.edu.pl.krysiukm.learnit.model.ProgressWrapper;
 import pb.edu.pl.krysiukm.learnit.repository.QuestionRepository;
+import pb.edu.pl.krysiukm.learnit.service.exception.AlreadyShowedQuestionException;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,13 +54,13 @@ public class QuestionService {
         return questionRepository.save(question);
     }
 
-    public Question getNextQuestion(String attemptId) throws NotFoundException {
+    public ProgressWrapper<Question> getNextQuestion(String attemptId) throws NotFoundException {
 
         UserAttempt userAttempt = userAttemptService.getUserAttempt(attemptId);
         Optional<ShowedQuestion> lastShowedQuestion = showedQuestionService.getLastShowedQuestion(userAttempt);
         if (lastShowedQuestion.isPresent()) {
-            log.info("Attempt: {} has already showed question.", attemptId);
-            return lastShowedQuestion.get().getQuestion();
+            log.warn("Attempt: {} has already showed question.", attemptId);
+            throw new AlreadyShowedQuestionException("Attempt has already showed question.");
         }
 
         List<Long> exposedQuestionsIds = userAttemptService.getExposedQuestions(attemptId)
@@ -78,16 +80,19 @@ public class QuestionService {
             throw new NotFoundException("No more questions!");
         }
 
-        int listSize = foundQuestions.size();
-        int randomIndex = ThreadLocalRandom.current().nextInt(listSize);
+        int totalSize = foundQuestions.size();
+        int randomIndex = ThreadLocalRandom.current().nextInt(totalSize);
 
         Question randomQuestion = foundQuestions.get(randomIndex);
 
         showedQuestionService.showQuestion(userAttempt, randomQuestion);
 
-        return randomQuestion;
+        return ProgressWrapper.<Question>builder()
+                .entry(randomQuestion)
+                .actual(userAttemptService.getExposedQuestions(attemptId).size())
+                .total(questionRepository.findAllByTechnology(technology).size())
+                .build();
     }
-
 
     public AnswerResult submitAnswer(AnswerSubmit submitPayload) throws NotFoundException {
         String attemptId = submitPayload.getAttemptId();

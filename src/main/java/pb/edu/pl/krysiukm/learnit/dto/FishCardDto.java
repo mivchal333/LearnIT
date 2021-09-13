@@ -1,13 +1,13 @@
 package pb.edu.pl.krysiukm.learnit.dto;
 
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Builder;
+import lombok.Getter;
 import pb.edu.pl.krysiukm.learnit.entity.Answer;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
-public class FishCardDto extends GameProgressWrapper {
+@Getter
+@Builder
+public class FishCardDto {
     private final String body;
     private final Answer answer;
 }

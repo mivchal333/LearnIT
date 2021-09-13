@@ -14,6 +14,7 @@ import pb.edu.pl.krysiukm.learnit.dto.QuestionMapper;
 import pb.edu.pl.krysiukm.learnit.dto.QuestionRequestResponseDto;
 import pb.edu.pl.krysiukm.learnit.entity.Question;
 import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
+import pb.edu.pl.krysiukm.learnit.model.ProgressWrapper;
 import pb.edu.pl.krysiukm.learnit.service.DifficultyService;
 import pb.edu.pl.krysiukm.learnit.service.QuestionService;
 import pb.edu.pl.krysiukm.learnit.service.TechnologyService;
@@ -45,7 +46,7 @@ public class QuestionController {
     public ResponseEntity<?> getQuestion(@RequestParam String attemptId) {
         Assert.notNull(attemptId, "You must specify attemptId");
         try {
-            Question question = questionService.getNextQuestion(attemptId);
+            ProgressWrapper<Question> question = questionService.getNextQuestion(attemptId);
             QuestionRequestResponseDto questionDto = questionMapper.mapToDto(question);
             return ResponseEntity.ok(questionDto);
         } catch (NotFoundException e) {
