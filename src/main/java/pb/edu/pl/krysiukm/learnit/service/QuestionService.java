@@ -12,6 +12,7 @@ import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
 import pb.edu.pl.krysiukm.learnit.repository.QuestionRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
@@ -52,7 +53,13 @@ public class QuestionService {
     }
 
     public Question getNextQuestion(String attemptId) throws NotFoundException {
+
         UserAttempt userAttempt = userAttemptService.getUserAttempt(attemptId);
+        Optional<ShowedQuestion> lastShowedQuestion = showedQuestionService.getLastShowedQuestion(userAttempt);
+        if (lastShowedQuestion.isPresent()) {
+            log.info("Attempt: {} has already showed question.", attemptId);
+            return lastShowedQuestion.get().getQuestion();
+        }
 
         List<Long> exposedQuestionsIds = userAttemptService.getExposedQuestions(attemptId)
                 .stream().map(Question::getId)
@@ -61,7 +68,7 @@ public class QuestionService {
         Technology technology = userAttempt.getTechnology();
 
         List<Question> foundQuestions;
-        if (true) {
+        if (exposedQuestionsIds.isEmpty()) {
             foundQuestions = questionRepository.findAllByTechnology(technology);
         } else {
             foundQuestions = questionRepository.findAllByTechnologyAndIdNotIn(technology, exposedQuestionsIds);
@@ -86,11 +93,12 @@ public class QuestionService {
         String attemptId = submitPayload.getAttemptId();
         UserAttempt userAttempt = userAttemptService.getUserAttempt(attemptId);
 
-        ShowedQuestion lastShowedUserQuestion = showedQuestionService.getLastShowedQuestion(userAttempt);
+        Optional<ShowedQuestion> lastShowedQuestionOpt = showedQuestionService.getLastShowedQuestion(userAttempt);
+        ShowedQuestion showedQuestion = lastShowedQuestionOpt.orElseThrow(() -> new RuntimeException("Not found showed question!"));
 
-        showedQuestionService.deleteShowedQuestion(lastShowedUserQuestion);
+        showedQuestionService.deleteShowedQuestion(showedQuestion);
 
-        Question lastUserQuestion = lastShowedUserQuestion.getQuestion();
+        Question lastUserQuestion = showedQuestion.getQuestion();
 
         Long userAnswerId = submitPayload.getAnswerId();
         Answer correctAnswer = lastUserQuestion.getCorrectAnswer();
