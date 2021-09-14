@@ -8,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-import pb.edu.pl.krysiukm.learnit.dto.AnswerSubmit;
-import pb.edu.pl.krysiukm.learnit.dto.QuestionCreateRequestDto;
-import pb.edu.pl.krysiukm.learnit.dto.QuestionMapper;
-import pb.edu.pl.krysiukm.learnit.dto.QuestionRequestResponseDto;
+import pb.edu.pl.krysiukm.learnit.dto.*;
 import pb.edu.pl.krysiukm.learnit.entity.Question;
 import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
 import pb.edu.pl.krysiukm.learnit.model.ProgressWrapper;
@@ -46,9 +43,10 @@ public class QuestionController {
     public ResponseEntity<?> getQuestion(@RequestParam String attemptId) {
         Assert.notNull(attemptId, "You must specify attemptId");
         try {
-            ProgressWrapper<Question> question = questionService.getNextQuestion(attemptId);
-            QuestionRequestResponseDto questionDto = questionMapper.mapToDto(question);
-            return ResponseEntity.ok(questionDto);
+            ProgressWrapper<Question> questionProgress = questionService.getNextQuestion(attemptId);
+            QuestionRequestResponseDto questionDto = questionMapper.mapToDto(questionProgress);
+            GameProgressWrapper<QuestionRequestResponseDto> nextQuestionProgress = new GameProgressWrapper<>(questionProgress, questionDto);
+            return ResponseEntity.ok(nextQuestionProgress);
         } catch (NotFoundException e) {
             log.error(e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());

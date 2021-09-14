@@ -49,4 +49,10 @@ public class UserAttemptService {
     public List<UserAttempt> getUserAttempts(User user) {
         return userAttemptRepository.findAllByUser(user);
     }
+
+    public List<UserAttempt> getUserHistory(User user, Long technologyId) {
+        Technology technology = technologyService.getById(technologyId);
+
+        return userAttemptRepository.findAllByUserAndTechnologyOrderByStartDateDesc(user, technology);
+    }
 }

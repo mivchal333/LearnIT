@@ -22,7 +22,6 @@ public class UserAttempt {
     private String id;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JsonIgnore
     private List<HistoryEntry> historyEntries;
 
     @JsonIgnore
@@ -30,6 +29,7 @@ public class UserAttempt {
     private User user;
 
     @ManyToOne
+    @JsonIgnore
     private Technology technology;
 
     private Instant startDate;

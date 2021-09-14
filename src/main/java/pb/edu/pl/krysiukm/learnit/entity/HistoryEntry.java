@@ -1,5 +1,6 @@
 package pb.edu.pl.krysiukm.learnit.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class HistoryEntry {
     private Long id;
 
     @OneToOne
+    @JsonIgnore
     private Question question;
     private Boolean answerResult;
     private Instant date;
