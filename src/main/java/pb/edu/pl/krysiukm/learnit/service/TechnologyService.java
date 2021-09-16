@@ -25,4 +25,8 @@ public class TechnologyService {
     public List<Technology> getAll() {
         return technologyRepository.findAll();
     }
+
+    public void remove(Long id) {
+        technologyRepository.deleteById(id);
+    }
 }

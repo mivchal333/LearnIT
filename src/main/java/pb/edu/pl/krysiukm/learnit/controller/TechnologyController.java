@@ -1,6 +1,7 @@
 package pb.edu.pl.krysiukm.learnit.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pb.edu.pl.krysiukm.learnit.entity.Technology;
 import pb.edu.pl.krysiukm.learnit.service.TechnologyService;
@@ -26,5 +27,11 @@ public class TechnologyController {
     @GetMapping("/{id}")
     public Technology getTechnology(@PathVariable Long id) {
         return technologyService.getById(id);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        technologyService.remove(id);
+        return ResponseEntity.noContent().build();
     }
 }
