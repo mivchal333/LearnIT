@@ -22,7 +22,7 @@ public class Question {
     @ManyToOne
     private User creator;
     @ManyToOne
-    private Technology technology;
+    private TechnologyEntity technologyEntity;
     @ManyToOne
     private Difficulty difficulty;
 

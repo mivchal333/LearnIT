@@ -12,15 +12,13 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Technology extends AbstractEntity {
+public class TechnologyEntity extends AbstractEntity {
     private String name;
     private String description;
+    private String image;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL)
     private List<Question> questions;
 
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<UserAttempt> userAttempts;
 }

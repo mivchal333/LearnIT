@@ -36,8 +36,8 @@ public class QuestionService {
         Answer correctAnswer = new Answer(createRequestDto.getCorrectAnswer());
         question.setCorrectAnswer(correctAnswer);
 
-        Technology technology = technologyService.getById(createRequestDto.getTechnologyId());
-        question.setTechnology(technology);
+        TechnologyEntity technologyEntity = technologyService.getById(createRequestDto.getTechnologyId());
+        question.setTechnologyEntity(technologyEntity);
 
         Difficulty difficulty = difficultyService.getById(createRequestDto.getDifficultyId());
         question.setDifficulty(difficulty);
@@ -67,13 +67,13 @@ public class QuestionService {
                 .stream().map(Question::getId)
                 .collect(Collectors.toList());
 
-        Technology technology = userAttempt.getTechnology();
+        TechnologyEntity technologyEntity = userAttempt.getTechnologyEntity();
 
         List<Question> foundQuestions;
         if (exposedQuestionsIds.isEmpty()) {
-            foundQuestions = questionRepository.findAllByTechnology(technology);
+            foundQuestions = questionRepository.findAllByTechnologyEntity(technologyEntity);
         } else {
-            foundQuestions = questionRepository.findAllByTechnologyAndIdNotIn(technology, exposedQuestionsIds);
+            foundQuestions = questionRepository.findAllByTechnologyEntityAndIdNotIn(technologyEntity, exposedQuestionsIds);
         }
 
         if (foundQuestions.isEmpty()) {
@@ -90,7 +90,7 @@ public class QuestionService {
         return ProgressWrapper.<Question>builder()
                 .entry(randomQuestion)
                 .actual(userAttemptService.getExposedQuestions(attemptId).size())
-                .total(questionRepository.findAllByTechnology(technology).size())
+                .total(questionRepository.findAllByTechnologyEntity(technologyEntity).size())
                 .build();
     }
 

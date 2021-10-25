@@ -26,7 +26,7 @@ public class QuestionMapper {
                 .body(question.getBody())
                 .answers(answers)
                 .difficultyId(question.getDifficulty().getId())
-                .technologyId(question.getTechnology().getId())
+                .technologyId(question.getTechnologyEntity().getId())
                 .build();
     }
 }

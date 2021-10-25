@@ -28,9 +28,9 @@ public class UserAttempt {
     @ManyToOne
     private User user;
 
-    @ManyToOne
     @JsonIgnore
-    private Technology technology;
+    @ManyToOne
+    private TechnologyEntity technologyEntity;
 
     private Instant startDate;
 
@@ -39,9 +39,9 @@ public class UserAttempt {
     @Enumerated(EnumType.STRING)
     private GameType gameType;
 
-    public UserAttempt(User user, Technology technology, GameType gameType) {
+    public UserAttempt(User user, TechnologyEntity technologyEntity, GameType gameType) {
         this.user = user;
-        this.technology = technology;
+        this.technologyEntity = technologyEntity;
         this.gameType = gameType;
     }
 

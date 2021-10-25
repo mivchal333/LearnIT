@@ -3,7 +3,7 @@ package pb.edu.pl.krysiukm.learnit.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException;
-import pb.edu.pl.krysiukm.learnit.entity.Technology;
+import pb.edu.pl.krysiukm.learnit.entity.TechnologyEntity;
 import pb.edu.pl.krysiukm.learnit.repository.TechnologyRepository;
 
 import java.util.List;
@@ -13,16 +13,16 @@ import java.util.List;
 public class TechnologyService {
     private final TechnologyRepository technologyRepository;
 
-    public Technology getById(Long id) {
+    public TechnologyEntity getById(Long id) {
         return technologyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Technology with id: %s not found.", id)));
     }
 
-    public Technology create(Technology technology) {
-        return technologyRepository.save(technology);
+    public TechnologyEntity create(TechnologyEntity technologyEntity) {
+        return technologyRepository.save(technologyEntity);
     }
 
-    public List<Technology> getAll() {
+    public List<TechnologyEntity> getAll() {
         return technologyRepository.findAll();
     }
 

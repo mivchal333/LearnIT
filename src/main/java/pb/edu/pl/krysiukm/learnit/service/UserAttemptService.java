@@ -18,8 +18,8 @@ public class UserAttemptService {
     private final TechnologyService technologyService;
 
     public UserAttempt startQuizAttempt(User user, Long technologyId) {
-        Technology technology = technologyService.getById(technologyId);
-        UserAttempt attempt = new UserAttempt(user, technology, UserAttempt.GameType.QUIZ);
+        TechnologyEntity technologyEntity = technologyService.getById(technologyId);
+        UserAttempt attempt = new UserAttempt(user, technologyEntity, UserAttempt.GameType.QUIZ);
         attempt.setStartDate(clock.instant());
         return userAttemptRepository.save(attempt);
     }
@@ -51,8 +51,8 @@ public class UserAttemptService {
     }
 
     public List<UserAttempt> getUserHistory(User user, Long technologyId) {
-        Technology technology = technologyService.getById(technologyId);
+        TechnologyEntity technologyEntity = technologyService.getById(technologyId);
 
-        return userAttemptRepository.findAllByUserAndTechnologyOrderByStartDateDesc(user, technology);
+        return userAttemptRepository.findAllByUserAndTechnologyEntityOrderByStartDateDesc(user, technologyEntity);
     }
 }
