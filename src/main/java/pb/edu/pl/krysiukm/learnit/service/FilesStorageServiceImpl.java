@@ -51,7 +51,7 @@ public class FilesStorageServiceImpl implements FilesStorageService {
             if (resource.exists() || resource.isReadable()) {
                 return resource;
             } else {
-                throw new RuntimeException("Could not read the file!");
+                throw new RuntimeException("Could not read the file: " + filename);
             }
         } catch (MalformedURLException e) {
             throw new RuntimeException("Error: " + e.getMessage());

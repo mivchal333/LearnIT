@@ -9,6 +9,7 @@ import pb.edu.pl.krysiukm.learnit.service.FileResolver;
 import pb.edu.pl.krysiukm.learnit.service.TechnologyService;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -45,10 +46,14 @@ public class TechnologyController {
     }
 
     private Technology mapToTechnology(TechnologyEntity technology) {
-        return Technology.builder()
+        Technology.TechnologyBuilder builder = Technology.builder()
+                .id(technology.getId())
                 .name(technology.getName())
-                .description(technology.getDescription())
-                .image(fileResolver.resolveFile(technology.getImage()))
-                .build();
+                .description(technology.getDescription());
+
+        Optional.ofNullable(technology.getImage())
+                .ifPresent((image) -> builder.image(fileResolver.resolveFile(image)));
+
+        return builder.build();
     }
 }
