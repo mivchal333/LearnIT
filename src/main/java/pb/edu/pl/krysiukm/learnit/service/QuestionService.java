@@ -12,6 +12,7 @@ import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
 import pb.edu.pl.krysiukm.learnit.model.ProgressWrapper;
 import pb.edu.pl.krysiukm.learnit.repository.QuestionRepository;
 import pb.edu.pl.krysiukm.learnit.service.exception.AlreadyShowedQuestionException;
+import pb.edu.pl.krysiukm.learnit.service.exception.NoMoreQuestionsException;
 
 import java.util.List;
 import java.util.Optional;
@@ -77,7 +78,7 @@ public class QuestionService {
         }
 
         if (foundQuestions.isEmpty()) {
-            throw new NotFoundException("No more questions!");
+            throw new NoMoreQuestionsException();
         }
 
         int totalSize = foundQuestions.size();
