@@ -1,14 +1,16 @@
 package pb.edu.pl.krysiukm.learnit.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Getter
-@Setter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

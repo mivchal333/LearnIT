@@ -10,7 +10,7 @@ import java.util.List;
 public class QuestionCreateRequestDto {
     private String body;
     private Long technologyId;
-    private Long difficultyId;
+    private Integer difficultyValue;
     private String correctAnswer;
     private List<String> badAnswers;
 }

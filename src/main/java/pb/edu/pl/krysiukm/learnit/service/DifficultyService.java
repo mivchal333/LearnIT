@@ -11,12 +11,8 @@ import pb.edu.pl.krysiukm.learnit.repository.DifficultyRepository;
 public class DifficultyService {
     private final DifficultyRepository difficultyRepository;
 
-    public Difficulty getById(Long id) {
+    public Difficulty getByValue(Integer id) {
         return difficultyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Difficulty with id:%s not found", id)));
-    }
-
-    public Difficulty create(Difficulty difficulty) {
-        return difficultyRepository.save(difficulty);
     }
 }

@@ -11,7 +11,6 @@ import java.util.List;
 public class QuestionRequestResponseDto {
     private final String body;
     private final Long technologyId;
-    private final Long difficultyId;
+    private final Integer difficultyValue;
     private final List<Answer> answers;
-
 }

@@ -25,7 +25,7 @@ public class QuestionMapper {
         return QuestionRequestResponseDto.builder()
                 .body(question.getBody())
                 .answers(answers)
-                .difficultyId(question.getDifficulty().getId())
+                .difficultyValue(question.getDifficulty().getValue())
                 .technologyId(question.getTechnologyEntity().getId())
                 .build();
     }

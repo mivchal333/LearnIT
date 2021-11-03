@@ -35,6 +35,7 @@ public class QuestionController {
             Question question = questionService.createQuestion(questionResponseDto);
             return ResponseEntity.ok(question);
         } catch (Exception e) {
+            log.error("[QuestionController] Create question error", e);
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

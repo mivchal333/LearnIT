@@ -31,23 +31,25 @@ public class QuestionService {
     private final QuestionMapper questionMapper;
 
     public Question createQuestion(QuestionCreateRequestDto createRequestDto) {
-        Question question = new Question();
-        question.setBody(createRequestDto.getBody());
 
         Answer correctAnswer = new Answer(createRequestDto.getCorrectAnswer());
-        question.setCorrectAnswer(correctAnswer);
 
         TechnologyEntity technologyEntity = technologyService.getById(createRequestDto.getTechnologyId());
-        question.setTechnologyEntity(technologyEntity);
 
-        Difficulty difficulty = difficultyService.getById(createRequestDto.getDifficultyId());
-        question.setDifficulty(difficulty);
+        Difficulty difficulty = difficultyService.getByValue(createRequestDto.getDifficultyValue());
 
         List<Answer> badAnswers = createRequestDto.getBadAnswers().stream()
                 .map(Answer::new)
                 .collect(Collectors.toList());
 
-        question.setBadAnswers(badAnswers);
+        Question question = Question.builder()
+                .body(createRequestDto.getBody())
+                .correctAnswer(correctAnswer)
+                .technologyEntity(technologyEntity)
+                .difficulty(difficulty)
+                .badAnswers(badAnswers)
+                .build();
+
         return createQuestion(question);
     }
 

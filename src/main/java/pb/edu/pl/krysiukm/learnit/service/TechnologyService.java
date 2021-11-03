@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException;
 import pb.edu.pl.krysiukm.learnit.entity.TechnologyEntity;
 import pb.edu.pl.krysiukm.learnit.repository.TechnologyRepository;
+import pb.edu.pl.krysiukm.learnit.repository.UserAttemptRepository;
 
 import java.util.List;
 
@@ -12,6 +13,8 @@ import java.util.List;
 @Service
 public class TechnologyService {
     private final TechnologyRepository technologyRepository;
+    private final UserAttemptRepository userAttemptRepository;
+
 
     public TechnologyEntity getById(Long id) {
         return technologyRepository.findById(id)
@@ -27,6 +30,7 @@ public class TechnologyService {
     }
 
     public void remove(Long id) {
+        userAttemptRepository.deleteAllByTechnologyEntityId(id);
         technologyRepository.deleteById(id);
     }
 }
