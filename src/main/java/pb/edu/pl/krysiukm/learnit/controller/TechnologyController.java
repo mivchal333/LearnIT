@@ -25,6 +25,14 @@ public class TechnologyController {
         return mapToTechnology(entity);
     }
 
+    @PutMapping("/{id}")
+    public Technology create(@PathVariable Long id,
+                             @RequestBody TechnologyEntity technologyEntity) {
+        TechnologyEntity entity = technologyService.update(id, technologyEntity);
+
+        return mapToTechnology(entity);
+    }
+
     @GetMapping
     public List<Technology> getAllTechnologies() {
         return technologyService.getAll()

@@ -118,4 +118,8 @@ public class QuestionService {
         userAttemptService.addHistoryEntry(attemptId, lastUserQuestion, false);
         return new AnswerResult(false, "Bad answer");
     }
+
+    public void deleteByTechnologyId(Long technologyId) {
+        questionRepository.deleteAllByTechnologyEntityId(technologyId);
+    }
 }

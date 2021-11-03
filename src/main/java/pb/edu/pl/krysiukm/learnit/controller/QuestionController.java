@@ -3,7 +3,6 @@ package pb.edu.pl.krysiukm.learnit.controller;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.Assert;
@@ -12,9 +11,7 @@ import pb.edu.pl.krysiukm.learnit.dto.*;
 import pb.edu.pl.krysiukm.learnit.entity.Question;
 import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
 import pb.edu.pl.krysiukm.learnit.model.ProgressWrapper;
-import pb.edu.pl.krysiukm.learnit.service.DifficultyService;
 import pb.edu.pl.krysiukm.learnit.service.QuestionService;
-import pb.edu.pl.krysiukm.learnit.service.TechnologyService;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -23,9 +20,6 @@ import pb.edu.pl.krysiukm.learnit.service.TechnologyService;
 public class QuestionController {
 
     private final QuestionService questionService;
-    private final DifficultyService difficultyService;
-    private final TechnologyService technologyService;
-    private final ModelMapper modelMapper;
     private final QuestionMapper questionMapper;
 
     @ResponseStatus(HttpStatus.CREATED)
