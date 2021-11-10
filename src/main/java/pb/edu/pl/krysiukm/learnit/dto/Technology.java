@@ -10,4 +10,5 @@ public class Technology {
     private String name;
     private String description;
     private UploadedFile image;
+    private long questionCount;
 }

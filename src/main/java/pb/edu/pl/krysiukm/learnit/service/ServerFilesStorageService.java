@@ -62,7 +62,7 @@ public class ServerFilesStorageService implements FilesStorageService {
     }
 
     @Override
-    public void deleteFile(String filename) {
+    public void deleteFile(String filename) throws FileDeleteException {
         try {
             Files.delete(this.root.resolve(filename));
         } catch (IOException e) {

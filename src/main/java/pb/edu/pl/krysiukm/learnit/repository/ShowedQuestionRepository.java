@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface ShowedQuestionRepository extends CrudRepository<ShowedQuestion, Long> {
 
     Optional<ShowedQuestion> findByUserAttempt(UserAttempt userAttempt);
+
 }

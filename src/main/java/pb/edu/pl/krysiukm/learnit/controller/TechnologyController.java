@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import pb.edu.pl.krysiukm.learnit.dto.Technology;
 import pb.edu.pl.krysiukm.learnit.entity.TechnologyEntity;
 import pb.edu.pl.krysiukm.learnit.service.FileResolver;
+import pb.edu.pl.krysiukm.learnit.service.QuestionService;
 import pb.edu.pl.krysiukm.learnit.service.TechnologyService;
 
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 public class TechnologyController {
     private final TechnologyService technologyService;
     private final FileResolver fileResolver;
+    private final QuestionService questionService;
 
     @PostMapping
     public Technology create(@RequestBody TechnologyEntity technologyEntity) {
@@ -54,10 +56,13 @@ public class TechnologyController {
     }
 
     private Technology mapToTechnology(TechnologyEntity technology) {
+        long questionsCount = questionService.countQuestions(technology.getId());
+
         Technology.TechnologyBuilder builder = Technology.builder()
                 .id(technology.getId())
                 .name(technology.getName())
-                .description(technology.getDescription());
+                .description(technology.getDescription())
+                .questionCount(questionsCount);
 
         Optional.ofNullable(technology.getImage())
                 .ifPresent((image) -> builder.image(fileResolver.resolveFile(image)));

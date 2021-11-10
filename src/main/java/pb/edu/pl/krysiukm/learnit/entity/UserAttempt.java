@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -32,8 +33,10 @@ public class UserAttempt {
     @ManyToOne
     private TechnologyEntity technologyEntity;
 
+    @Column(nullable = false)
     private Instant startDate;
 
+    @Nullable
     private Instant endDate;
 
     @Enumerated(EnumType.STRING)

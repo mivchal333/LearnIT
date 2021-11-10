@@ -119,7 +119,7 @@ public class QuestionService {
         return new AnswerResult(false, "Bad answer");
     }
 
-    public void deleteByTechnologyId(Long technologyId) {
-        questionRepository.deleteAllByTechnologyEntityId(technologyId);
+    public long countQuestions(Long technologyId) {
+        return questionRepository.countAllByTechnologyEntityId(technologyId);
     }
 }

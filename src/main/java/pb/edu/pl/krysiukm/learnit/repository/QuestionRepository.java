@@ -16,4 +16,6 @@ public interface QuestionRepository extends CrudRepository<Question, Long> {
     List<Question> findAllByTechnologyEntity(TechnologyEntity technologyEntity);
 
     void deleteAllByTechnologyEntityId(Long technologyId);
+
+    long countAllByTechnologyEntityId(Long technologyId);
 }

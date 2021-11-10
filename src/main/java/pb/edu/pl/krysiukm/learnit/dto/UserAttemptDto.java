@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 import pb.edu.pl.krysiukm.learnit.entity.UserAttempt;
 
-import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -12,7 +11,7 @@ import java.util.List;
 public class UserAttemptDto {
     private String id;
     private List<HistoryEntryDto> history;
-    private Instant startDate;
-    private Instant endDate;
+    private Long startDate;
+    private Long endDate;
     private UserAttempt.GameType gameType;
 }
