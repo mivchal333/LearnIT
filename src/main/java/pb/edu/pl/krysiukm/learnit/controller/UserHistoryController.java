@@ -24,7 +24,7 @@ public class UserHistoryController {
     private final UserAttemptMapper userAttemptMapper;
 
     @GetMapping
-    public ResponseEntity<?> getUserHistory(@RequestParam Long technologyId) {
+    public ResponseEntity<?> getUserHistoryByTechnology(@RequestParam Long technologyId) {
         User user = userRepository.findAll().iterator().next();
 
         List<UserAttemptDto> userHistory = userAttemptService.getUserHistory(user, technologyId)

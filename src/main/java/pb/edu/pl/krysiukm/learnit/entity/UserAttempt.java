@@ -9,7 +9,7 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.Instant;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,15 +22,16 @@ public class UserAttempt {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<HistoryEntry> historyEntries;
+    @JoinColumn(name = "USER_ATTEMPT_ID")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<HistoryEntry> historyEntries;
 
     @JsonIgnore
     @ManyToOne
     private User user;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private TechnologyEntity technologyEntity;
 
     @Column(nullable = false)

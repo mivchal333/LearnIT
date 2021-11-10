@@ -15,4 +15,6 @@ public interface UserAttemptRepository extends CrudRepository<UserAttempt, Strin
     List<UserAttempt> findAllByUserAndTechnologyEntityOrderByStartDateDesc(User user, TechnologyEntity technologyEntity);
 
     void deleteAllByTechnologyEntityId(Long id);
+
+    List<UserAttempt> findAllByUserOrderByStartDateDesc(User user);
 }

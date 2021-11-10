@@ -55,4 +55,8 @@ public class UserAttemptService {
 
         return userAttemptRepository.findAllByUserAndTechnologyEntityOrderByStartDateDesc(user, technologyEntity);
     }
+
+    public List<UserAttempt> getUserHistory(User user) {
+        return userAttemptRepository.findAllByUserOrderByStartDateDesc(user);
+    }
 }
