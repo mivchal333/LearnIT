@@ -12,10 +12,14 @@ VALUES (5, 'Expert');
 INSERT INTO PUBLIC.TECHNOLOGY_ENTITY (ID, CREATE_DATE, UPDATE_DATE, DESCRIPTION, IMAGE, NAME)
 VALUES (1, '2021-11-10 20:18:34.188138', '2021-11-10 20:26:08.386956',
         'Lorem Ipsum is simply dummy text of the printing and typesetting industrdsy. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
-        'd38a04ec-90c0-42ed-906a-155657acacab.jpg', 'Java Script');
+        '3fb76742-399c-4922-a707-be1170420c79.jpg', 'Java Script');
+INSERT INTO PUBLIC.TECHNOLOGY_ENTITY (ID, CREATE_DATE, UPDATE_DATE, DESCRIPTION, IMAGE, NAME)
+VALUES (2, '2021-11-10 20:18:34.188138', '2021-11-10 20:26:08.386956',
+        'Lorem Ipsum is simply dummy text of the printing and typesetting industrdsy. Lorem Ipsum has been the industry''s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+        '3fb76742-399c-4922-a707-be1170420c79.jpg', 'Java');
 
-INSERT INTO PUBLIC.USER (ID, CREATE_DATE, UPDATE_DATE, MAIL, PASSWORD, USERNAME)
-VALUES (1, '2021-09-02 22:42:23.000000', '2021-09-02 22:42:26.000000', 'mail1', 'pass1', 'usernmame1');
+INSERT INTO PUBLIC.USER_ACCOUNT (ID, EMAIL, ENABLED, FIRST_NAME, IS_USING2FA, LAST_NAME, PASSWORD, SECRET)
+VALUES (1, 'admin@admin.pl', true, 'FirstName', false, 'LastName', 'pass', 'secret');
 
 INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID)
 VALUES (1, '<script>', null);

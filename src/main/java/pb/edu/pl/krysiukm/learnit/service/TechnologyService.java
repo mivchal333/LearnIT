@@ -2,6 +2,7 @@ package pb.edu.pl.krysiukm.learnit.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException;
@@ -70,11 +71,19 @@ public class TechnologyService {
         }
 
         String oldImage = oldTechnologyEntity.getImage();
-        if (!technologyEntity.getImage().equals(oldImage)) {
+
+        if (isNewImage(technologyEntity, oldImage)) {
             oldTechnologyEntity.setImage(technologyEntity.getImage());
             storageService.deleteFile(oldImage);
         }
 
         return technologyRepository.save(oldTechnologyEntity);
+    }
+
+    private boolean isNewImage(TechnologyEntity technologyEntity, @Nullable String oldImage) {
+        return Optional.ofNullable(oldImage)
+                .map(image -> !image.equals(technologyEntity.getImage()))
+                .orElse(false);
+
     }
 }

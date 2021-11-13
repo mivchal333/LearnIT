@@ -1,9 +1,12 @@
 package pb.edu.pl.krysiukm.learnit.repository;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import pb.edu.pl.krysiukm.learnit.entity.User;
 
-@Repository
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
+    User findByEmail(String email);
+
+    @Override
+    void delete(User user);
+
 }

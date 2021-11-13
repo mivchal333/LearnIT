@@ -1,16 +1,12 @@
 package pb.edu.pl.krysiukm.learnit;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
+
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
-public class LearnItApplicationTests {
-
-    @Test
-    void contextLoads() {
-    }
-
+@SpringBootTest(webEnvironment = RANDOM_PORT)
+public abstract class BaseIT {
 }

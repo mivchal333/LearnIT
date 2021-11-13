@@ -6,7 +6,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import pb.edu.pl.krysiukm.learnit.service.exception.FileDeleteException;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -62,12 +61,11 @@ public class ServerFilesStorageService implements FilesStorageService {
     }
 
     @Override
-    public void deleteFile(String filename) throws FileDeleteException {
+    public void deleteFile(String filename) {
         try {
             Files.delete(this.root.resolve(filename));
         } catch (IOException e) {
-            log.error("[ServerFilesStorageService] Unable to remove file", e);
-            throw new FileDeleteException("Cannot delete file: " + filename);
+            log.error("[ServerFilesStorageService] Unable to remove file: {}", filename, e);
         }
     }
 }
