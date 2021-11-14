@@ -17,9 +17,9 @@ public class UserAttemptService {
     private final UserAttemptRepository userAttemptRepository;
     private final TechnologyService technologyService;
 
-    public UserAttempt startQuizAttempt(User user, Long technologyId) {
+    public UserAttempt startQuizAttempt(UserAccount userAccount, Long technologyId) {
         TechnologyEntity technologyEntity = technologyService.getById(technologyId);
-        UserAttempt attempt = new UserAttempt(user, technologyEntity, UserAttempt.GameType.QUIZ);
+        UserAttempt attempt = new UserAttempt(userAccount, technologyEntity, UserAttempt.GameType.QUIZ);
         attempt.setStartDate(clock.instant());
         return userAttemptRepository.save(attempt);
     }
@@ -46,17 +46,17 @@ public class UserAttemptService {
                 .orElseThrow(() -> new NotFoundException("User attempt does not exist! Id:" + id));
     }
 
-    public List<UserAttempt> getUserAttempts(User user) {
-        return userAttemptRepository.findAllByUser(user);
+    public List<UserAttempt> getUserAttempts(UserAccount userAccount) {
+        return userAttemptRepository.findAllByUserAccount(userAccount);
     }
 
-    public List<UserAttempt> getUserHistory(User user, Long technologyId) {
+    public List<UserAttempt> getUserHistory(UserAccount userAccount, Long technologyId) {
         TechnologyEntity technologyEntity = technologyService.getById(technologyId);
 
-        return userAttemptRepository.findAllByUserAndTechnologyEntityOrderByStartDateDesc(user, technologyEntity);
+        return userAttemptRepository.findAllByUserAccountAndTechnologyEntityOrderByStartDateDesc(userAccount, technologyEntity);
     }
 
-    public List<UserAttempt> getUserHistory(User user) {
-        return userAttemptRepository.findAllByUserOrderByStartDateDesc(user);
+    public List<UserAttempt> getUserHistory(UserAccount userAccount) {
+        return userAttemptRepository.findAllByUserAccountOrderByStartDateDesc(userAccount);
     }
 }

@@ -16,7 +16,7 @@ public class Role {
     private Long id;
 
     @ManyToMany(mappedBy = "roles")
-    private Collection<User> users;
+    private Collection<UserAccount> userAccounts;
 
     @ManyToMany
     @JoinTable(name = "roles_privileges", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))

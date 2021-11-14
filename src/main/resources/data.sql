@@ -19,8 +19,8 @@ VALUES (2, '2021-11-10 20:18:34.188138', '2021-11-10 20:26:08.386956',
         '3fb76742-399c-4922-a707-be1170420c79.jpg', 'Java');
 
 INSERT INTO PUBLIC.USER_ACCOUNT (ID, EMAIL, ENABLED, FIRST_NAME, IS_USING2FA, LAST_NAME, PASSWORD, SECRET)
-VALUES (1, 'admin@admin.pl', true, 'FirstName', false, 'LastName', 'pass', 'secret');
-
+VALUES (1, 'admin@admin.com', true, 'admin', false, 'admin',
+        '$2a$11$02x3bN05vZqctGn.J0XJXuPvSdkN3DDXoDJeXbmAQU218zVzsE5ge', null);
 INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID)
 VALUES (1, '<script>', null);
 

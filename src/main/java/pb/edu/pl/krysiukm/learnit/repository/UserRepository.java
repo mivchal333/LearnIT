@@ -1,12 +1,14 @@
 package pb.edu.pl.krysiukm.learnit.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pb.edu.pl.krysiukm.learnit.entity.User;
+import pb.edu.pl.krysiukm.learnit.entity.UserAccount;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    User findByEmail(String email);
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<UserAccount, Long> {
+    Optional<UserAccount> findByEmail(String email);
 
     @Override
-    void delete(User user);
+    void delete(UserAccount userAccount);
 
 }

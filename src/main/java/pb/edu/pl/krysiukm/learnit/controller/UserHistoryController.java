@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pb.edu.pl.krysiukm.learnit.dto.UserAttemptDto;
 import pb.edu.pl.krysiukm.learnit.dto.UserAttemptMapper;
-import pb.edu.pl.krysiukm.learnit.entity.User;
+import pb.edu.pl.krysiukm.learnit.entity.UserAccount;
 import pb.edu.pl.krysiukm.learnit.repository.UserRepository;
 import pb.edu.pl.krysiukm.learnit.service.UserAttemptService;
 
@@ -25,9 +25,9 @@ public class UserHistoryController {
 
     @GetMapping
     public ResponseEntity<?> getUserHistoryByTechnology(@RequestParam Long technologyId) {
-        User user = userRepository.findAll().iterator().next();
+        UserAccount userAccount = userRepository.findAll().iterator().next();
 
-        List<UserAttemptDto> userHistory = userAttemptService.getUserHistory(user, technologyId)
+        List<UserAttemptDto> userHistory = userAttemptService.getUserHistory(userAccount, technologyId)
                 .stream()
                 .map(userAttemptMapper::mapToDto)
                 .collect(Collectors.toList());

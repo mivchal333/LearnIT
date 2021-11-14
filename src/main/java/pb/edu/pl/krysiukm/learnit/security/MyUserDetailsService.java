@@ -10,13 +10,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pb.edu.pl.krysiukm.learnit.entity.Privilege;
 import pb.edu.pl.krysiukm.learnit.entity.Role;
-import pb.edu.pl.krysiukm.learnit.entity.User;
+import pb.edu.pl.krysiukm.learnit.entity.UserAccount;
 import pb.edu.pl.krysiukm.learnit.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service("userDetailsService")
 @Transactional
@@ -45,18 +46,17 @@ public class MyUserDetailsService implements UserDetailsService {
 //        }
 
         try {
-            final User user = userRepository.findByEmail(email);
-            if (user == null) {
-                throw new UsernameNotFoundException("No user found with username: " + email);
-            }
+            final Optional<UserAccount> userAccountOpt = userRepository.findByEmail(email);
+
+            UserAccount userAccount = userAccountOpt.orElseThrow(() -> new UsernameNotFoundException("No user found with username: " + email));
 
             return new org.springframework.security.core.userdetails.User(
-                    user.getEmail(),
-                    user.getPassword(),
-                    user.isEnabled(),
+                    userAccount.getEmail(),
+                    userAccount.getPassword(),
+                    true,
                     true,
                     true, true,
-                    getAuthorities(user.getRoles()));
+                    getAuthorities(userAccount.getRoles()));
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }

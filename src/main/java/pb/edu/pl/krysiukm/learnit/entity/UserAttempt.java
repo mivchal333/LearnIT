@@ -28,7 +28,7 @@ public class UserAttempt {
 
     @JsonIgnore
     @ManyToOne
-    private User user;
+    private UserAccount userAccount;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -43,8 +43,8 @@ public class UserAttempt {
     @Enumerated(EnumType.STRING)
     private GameType gameType;
 
-    public UserAttempt(User user, TechnologyEntity technologyEntity, GameType gameType) {
-        this.user = user;
+    public UserAttempt(UserAccount userAccount, TechnologyEntity technologyEntity, GameType gameType) {
+        this.userAccount = userAccount;
         this.technologyEntity = technologyEntity;
         this.gameType = gameType;
     }

@@ -10,7 +10,7 @@ import java.util.Collection;
 @Table(name = "USER_ACCOUNT")
 @Getter
 @Setter
-public class User {
+public class UserAccount {
 
     @Id
     @Column(unique = true)
@@ -38,7 +38,7 @@ public class User {
     @JoinTable(name = "USERS_ROLES", joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
-    public User() {
+    public UserAccount() {
         super();
 //        this.secret = Base32.random();
         this.enabled = false;

@@ -3,7 +3,7 @@ package pb.edu.pl.krysiukm.learnit.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pb.edu.pl.krysiukm.learnit.entity.User;
+import pb.edu.pl.krysiukm.learnit.entity.UserAccount;
 import pb.edu.pl.krysiukm.learnit.entity.UserAttempt;
 import pb.edu.pl.krysiukm.learnit.repository.UserRepository;
 import pb.edu.pl.krysiukm.learnit.service.UserAttemptService;
@@ -20,17 +20,17 @@ public class AttemptController {
     @PostMapping
     public ResponseEntity<UserAttempt> startAttempt(@RequestParam Long technologyId) {
         // TODO: get user from security context
-        User user = userRepository.findAll().iterator().next();
-        UserAttempt attempt = userAttemptService.startQuizAttempt(user, technologyId);
+        UserAccount userAccount = userRepository.findAll().iterator().next();
+        UserAttempt attempt = userAttemptService.startQuizAttempt(userAccount, technologyId);
         return ResponseEntity.ok(attempt);
     }
 
     @GetMapping
     public ResponseEntity<List<UserAttempt>> getUserActiveAttempts() {
         // TODO: get user from security context
-        User user = userRepository.findAll().iterator().next();
+        UserAccount userAccount = userRepository.findAll().iterator().next();
 
-        List<UserAttempt> attempts = userAttemptService.getUserAttempts(user);
+        List<UserAttempt> attempts = userAttemptService.getUserAttempts(userAccount);
 
         return ResponseEntity.ok(attempts);
     }

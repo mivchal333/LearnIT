@@ -1,11 +1,15 @@
 package pb.edu.pl.krysiukm.learnit.service;
 
 import pb.edu.pl.krysiukm.learnit.dto.UserDto;
-import pb.edu.pl.krysiukm.learnit.entity.User;
+import pb.edu.pl.krysiukm.learnit.entity.UserAccount;
+
+import java.util.Optional;
 
 public interface IUserService {
 
-    User registerNewUserAccount(UserDto accountDto);
+    UserAccount registerNewUserAccount(UserDto accountDto);
+
+    Optional<UserAccount> getUserAccount(String email);
 
 //    User getUser(String verificationToken);
 //

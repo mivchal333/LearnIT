@@ -5,12 +5,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pb.edu.pl.krysiukm.learnit.controller.exception.UserAlreadyExistException;
 import pb.edu.pl.krysiukm.learnit.dto.UserDto;
-import pb.edu.pl.krysiukm.learnit.entity.User;
+import pb.edu.pl.krysiukm.learnit.entity.UserAccount;
 import pb.edu.pl.krysiukm.learnit.repository.RoleRepository;
 import pb.edu.pl.krysiukm.learnit.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.Arrays;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -21,22 +22,28 @@ public class UserService implements IUserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public User registerNewUserAccount(UserDto accountDto) throws UserAlreadyExistException {
+    public UserAccount registerNewUserAccount(UserDto accountDto) throws UserAlreadyExistException {
         if (emailExists(accountDto.getEmail())) {
             throw new UserAlreadyExistException("There is an account with that email address: " + accountDto.getEmail());
         }
-        final User user = new User();
+        final UserAccount userAccount = new UserAccount();
 
-        user.setFirstName(accountDto.getFirstName());
-        user.setLastName(accountDto.getLastName());
-        user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
-        user.setEmail(accountDto.getEmail());
+        userAccount.setFirstName(accountDto.getFirstName());
+        userAccount.setLastName(accountDto.getLastName());
+        userAccount.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+        userAccount.setEmail(accountDto.getEmail());
 //        user.setUsing2FA(accountDto.isUsing2FA());
-        user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
-        return userRepository.save(user);
+        userAccount.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
+        return userRepository.save(userAccount);
     }
 
+    @Override
+    public Optional<UserAccount> getUserAccount(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+
     private boolean emailExists(String email) {
-        return userRepository.findByEmail(email) != null;
+        return userRepository.findByEmail(email).isPresent();
     }
 }

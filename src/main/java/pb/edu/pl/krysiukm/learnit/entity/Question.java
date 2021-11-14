@@ -22,7 +22,7 @@ public class Question {
     private Answer correctAnswer;
 
     @ManyToOne
-    private User creator;
+    private UserAccount creator;
     @ManyToOne
     private TechnologyEntity technologyEntity;
     @ManyToOne
