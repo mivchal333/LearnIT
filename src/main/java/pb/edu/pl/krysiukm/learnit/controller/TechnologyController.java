@@ -2,6 +2,7 @@ package pb.edu.pl.krysiukm.learnit.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pb.edu.pl.krysiukm.learnit.dto.Technology;
 import pb.edu.pl.krysiukm.learnit.entity.TechnologyEntity;
@@ -27,6 +28,7 @@ public class TechnologyController {
         return mapToTechnology(entity);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PutMapping("/{id}")
     public Technology create(@PathVariable Long id,
                              @RequestBody TechnologyEntity technologyEntity) {

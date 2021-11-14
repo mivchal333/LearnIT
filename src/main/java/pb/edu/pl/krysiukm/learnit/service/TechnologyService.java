@@ -3,6 +3,7 @@ package pb.edu.pl.krysiukm.learnit.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException;
@@ -18,6 +19,7 @@ import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 @Service
 public class TechnologyService {
     private final TechnologyRepository technologyRepository;
@@ -31,6 +33,7 @@ public class TechnologyService {
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Technology with id: %s not found.", id)));
     }
 
+    @PreAuthorize("isAuthenticated()")
     public TechnologyEntity create(TechnologyEntity technologyEntity) {
         return technologyRepository.save(technologyEntity);
     }
@@ -39,7 +42,6 @@ public class TechnologyService {
         return technologyRepository.findAll();
     }
 
-    @Transactional
     public void remove(Long id) {
         TechnologyEntity entity = technologyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found technology with id: " + id));

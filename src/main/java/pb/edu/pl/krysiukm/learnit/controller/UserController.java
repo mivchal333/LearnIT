@@ -2,6 +2,7 @@ package pb.edu.pl.krysiukm.learnit.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.internal.util.Assert;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -35,6 +36,8 @@ public class UserController {
 
     @GetMapping("/myAccount")
     public ResponseEntity getLoggedUserDetails(@AuthenticationPrincipal User user) {
+        Assert.notNull(user, "authenticated user");
+
         Optional<UserAccount> userAccountOpt = userService.getUserAccount(user.getUsername());
         UserAccount userAccount = userAccountOpt.orElseThrow(() -> new RuntimeException("User not found"));
 
