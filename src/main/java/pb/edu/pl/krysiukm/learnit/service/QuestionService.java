@@ -5,8 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pb.edu.pl.krysiukm.learnit.dto.AnswerSubmit;
-import pb.edu.pl.krysiukm.learnit.dto.QuestionCreateRequestDto;
-import pb.edu.pl.krysiukm.learnit.dto.QuestionMapper;
+import pb.edu.pl.krysiukm.learnit.dto.question.AnswerPayload;
+import pb.edu.pl.krysiukm.learnit.dto.question.QuestionCreateRequestDto;
+import pb.edu.pl.krysiukm.learnit.dto.question.QuestionMapper;
 import pb.edu.pl.krysiukm.learnit.entity.*;
 import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
 import pb.edu.pl.krysiukm.learnit.model.ProgressWrapper;
@@ -32,18 +33,21 @@ public class QuestionService {
 
     public Question createQuestion(QuestionCreateRequestDto createRequestDto) {
 
-        Answer correctAnswer = new Answer(createRequestDto.getCorrectAnswer());
+        AnswerPayload correctAnswerPayload = createRequestDto.getCorrectAnswer();
+        Answer correctAnswer = new Answer(correctAnswerPayload.getBody(), correctAnswerPayload.getCode());
 
         TechnologyEntity technologyEntity = technologyService.getById(createRequestDto.getTechnologyId());
 
         Difficulty difficulty = difficultyService.getByValue(createRequestDto.getDifficultyValue());
 
         List<Answer> badAnswers = createRequestDto.getBadAnswers().stream()
-                .map(Answer::new)
+                .map(answerPayload -> new Answer(answerPayload.getBody(), answerPayload.getCode()))
                 .collect(Collectors.toList());
 
         Question question = Question.builder()
                 .body(createRequestDto.getBody())
+                .codeAttachment(createRequestDto.getCodeAttachment())
+                .codeLang(createRequestDto.getCodeLang())
                 .correctAnswer(correctAnswer)
                 .technologyEntity(technologyEntity)
                 .difficulty(difficulty)

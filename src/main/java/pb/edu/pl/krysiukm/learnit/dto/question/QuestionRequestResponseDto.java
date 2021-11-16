@@ -1,4 +1,4 @@
-package pb.edu.pl.krysiukm.learnit.dto;
+package pb.edu.pl.krysiukm.learnit.dto.question;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +10,8 @@ import java.util.List;
 @Builder
 public class QuestionRequestResponseDto {
     private final String body;
+    private String codeAttachment;
+    private String codeLang;
     private final Long technologyId;
     private final Integer difficultyValue;
     private final List<Answer> answers;

@@ -86,6 +86,5 @@ public class TechnologyService {
         return Optional.ofNullable(oldImage)
                 .map(image -> !image.equals(technologyEntity.getImage()))
                 .orElse(false);
-
     }
 }

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pb.edu.pl.krysiukm.learnit.dto.FishCardDto;
-import pb.edu.pl.krysiukm.learnit.dto.FishCardMapper;
+import pb.edu.pl.krysiukm.learnit.dto.CardDto;
+import pb.edu.pl.krysiukm.learnit.dto.CardMapper;
 import pb.edu.pl.krysiukm.learnit.dto.GameProgressWrapper;
 import pb.edu.pl.krysiukm.learnit.entity.Question;
 import pb.edu.pl.krysiukm.learnit.model.ProgressWrapper;
@@ -20,10 +20,10 @@ import pb.edu.pl.krysiukm.learnit.service.exception.NoMoreQuestionsException;
 @RequiredArgsConstructor
 @Slf4j
 @RestController
-@RequestMapping("/fishcard")
-public class FishCardController {
+@RequestMapping("/card")
+public class CardController {
     private final QuestionService questionService;
-    private final FishCardMapper fishCardMapper;
+    private final CardMapper cardMapper;
 
     @GetMapping
     public ResponseEntity<?> getFishCard(@RequestParam String attemptId) {
@@ -31,10 +31,10 @@ public class FishCardController {
 
         try {
             ProgressWrapper<Question> nextQuestionProgress = questionService.getNextQuestion(attemptId);
-            FishCardDto fishCardDto = fishCardMapper.mapToDto(nextQuestionProgress);
-            GameProgressWrapper<FishCardDto> fishCardDtoProgress = new GameProgressWrapper<>(nextQuestionProgress, fishCardDto);
+            CardDto cardDto = cardMapper.mapToDto(nextQuestionProgress);
+            GameProgressWrapper<CardDto> responseBody = new GameProgressWrapper<>(nextQuestionProgress, cardDto);
 
-            return ResponseEntity.ok(fishCardDtoProgress);
+            return ResponseEntity.ok(responseBody);
         } catch (NoMoreQuestionsException e) {
             log.warn("[GET_CARD_WARNING] No next card found.");
             return ResponseEntity.badRequest().build();

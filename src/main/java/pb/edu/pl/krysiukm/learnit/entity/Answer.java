@@ -20,8 +20,10 @@ public class Answer {
     private Long id;
 
     private String body;
+    private String code;
 
-    public Answer(String body) {
+    public Answer(String body, String code) {
         this.body = body;
+        this.code = code;
     }
 }

@@ -43,6 +43,9 @@ public class UserAttempt {
     @Enumerated(EnumType.STRING)
     private GameType gameType;
 
+    @OneToOne(cascade = CascadeType.REMOVE)
+    private ShowedQuestion showedQuestion;
+
     public UserAttempt(UserAccount userAccount, TechnologyEntity technologyEntity, GameType gameType) {
         this.userAccount = userAccount;
         this.technologyEntity = technologyEntity;

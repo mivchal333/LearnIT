@@ -1,4 +1,4 @@
-package pb.edu.pl.krysiukm.learnit.dto;
+package pb.edu.pl.krysiukm.learnit.dto.question;
 
 import lombok.Builder;
 import lombok.Data;

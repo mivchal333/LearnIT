@@ -1,4 +1,4 @@
-package pb.edu.pl.krysiukm.learnit.dto;
+package pb.edu.pl.krysiukm.learnit.dto.question;
 
 import org.springframework.stereotype.Component;
 import pb.edu.pl.krysiukm.learnit.entity.Answer;
@@ -24,6 +24,8 @@ public class QuestionMapper {
 
         return QuestionRequestResponseDto.builder()
                 .body(question.getBody())
+                .codeAttachment(question.getCodeAttachment())
+                .codeLang(question.getCodeLang())
                 .answers(answers)
                 .difficultyValue(question.getDifficulty().getValue())
                 .technologyId(question.getTechnologyEntity().getId())

@@ -17,6 +17,8 @@ public class Question {
     private Long id;
 
     private String body;
+    private String codeAttachment;
+    private String codeLang;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Answer correctAnswer;

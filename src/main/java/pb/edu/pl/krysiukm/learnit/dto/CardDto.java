@@ -7,7 +7,9 @@ import pb.edu.pl.krysiukm.learnit.entity.Answer;
 
 @Getter
 @Builder
-public class FishCardDto {
+public class CardDto {
     private final String body;
+    private String codeAttachment;
+    private String codeLang;
     private final Answer answer;
 }

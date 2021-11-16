@@ -2,6 +2,7 @@ package pb.edu.pl.krysiukm.learnit.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import pb.edu.pl.krysiukm.learnit.dto.question.QuestionPreviewDto;
 import pb.edu.pl.krysiukm.learnit.entity.HistoryEntry;
 
 import java.time.Instant;
