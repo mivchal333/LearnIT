@@ -12,4 +12,5 @@ public class CardDto {
     private String codeAttachment;
     private String codeLang;
     private final Answer answer;
+    private int difficultyValue;
 }

@@ -1,10 +1,10 @@
 package pb.edu.pl.krysiukm.learnit.service;
 
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pb.edu.pl.krysiukm.learnit.entity.*;
 import pb.edu.pl.krysiukm.learnit.repository.UserAttemptRepository;
+import pb.edu.pl.krysiukm.learnit.service.exception.NotFoundException;
 
 import java.time.Clock;
 import java.util.List;
@@ -41,7 +41,7 @@ public class UserAttemptService {
         userAttemptRepository.save(userAttempt);
     }
 
-    public UserAttempt getUserAttempt(String id) throws NotFoundException {
+    public UserAttempt getUserAttempt(String id) {
         return userAttemptRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User attempt does not exist! Id:" + id));
     }
