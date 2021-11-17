@@ -9,11 +9,13 @@ import pb.edu.pl.krysiukm.learnit.entity.Role;
 import pb.edu.pl.krysiukm.learnit.entity.UserAccount;
 import pb.edu.pl.krysiukm.learnit.repository.RoleRepository;
 import pb.edu.pl.krysiukm.learnit.repository.UserRepository;
-import pb.edu.pl.krysiukm.learnit.security.AppRoles;
+import pb.edu.pl.krysiukm.learnit.security.AppRole;
+import pb.edu.pl.krysiukm.learnit.service.exception.NotFoundException;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -33,7 +35,7 @@ public class UserService {
         userAccount.setLastName(accountDto.getLastName());
         userAccount.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         userAccount.setEmail(accountDto.getEmail());
-        List<Role> userRoles = List.of(roleRepository.findByName(AppRoles.ROLE_USER));
+        List<Role> userRoles = List.of(roleRepository.findByName(AppRole.ROLE_USER.name()));
         userAccount.setRoles(userRoles);
         return userRepository.save(userAccount);
     }
@@ -45,5 +47,28 @@ public class UserService {
 
     private boolean emailExists(String email) {
         return userRepository.findByEmail(email).isPresent();
+    }
+
+    public List<UserAccount> findAll() {
+        return userRepository.findAll();
+    }
+
+    public void revokeRole(String email, AppRole role) {
+        Optional<UserAccount> userOpt = userRepository.findByEmail(email);
+        UserAccount userAccount = userOpt.orElseThrow(() -> new NotFoundException("Not found user with that email"));
+
+        List<Role> newRoles = userAccount.getRoles()
+                .stream()
+                .filter(role1 -> !role1.getName().equals(role.name()))
+                .collect(Collectors.toList());
+        userAccount.setRoles(newRoles);
+    }
+
+    public void grantRole(String userEmail, AppRole roleToGrant) {
+        Optional<UserAccount> userOpt = userRepository.findByEmail(userEmail);
+        UserAccount userAccount = userOpt.orElseThrow(() -> new NotFoundException("Not found user with that email"));
+
+        Role role = roleRepository.findByName(roleToGrant.name());
+        userAccount.getRoles().add(role);
     }
 }

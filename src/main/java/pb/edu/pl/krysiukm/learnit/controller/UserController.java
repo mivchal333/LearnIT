@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import pb.edu.pl.krysiukm.learnit.controller.exception.UserAlreadyExistException;
+import pb.edu.pl.krysiukm.learnit.dto.RoleChangeRequestDto;
 import pb.edu.pl.krysiukm.learnit.dto.UserAccountDetailsDto;
 import pb.edu.pl.krysiukm.learnit.dto.UserDto;
 import pb.edu.pl.krysiukm.learnit.entity.Role;
@@ -43,19 +44,43 @@ public class UserController {
 
         Optional<UserAccount> userAccountOpt = userService.getUserAccount(user.getUsername());
         UserAccount userAccount = userAccountOpt.orElseThrow(() -> new RuntimeException("User not found"));
+        UserAccountDetailsDto userAccountDetailsDto = mapToDto(userAccount);
 
 
-        List<String> roles = userAccount.getRoles()
+        return ResponseEntity.ok(userAccountDetailsDto);
+    }
+
+    @PreAuthorize("isAuthenticated() and hasRole('ROLE_ADMIN')")
+    @GetMapping
+    public List<UserAccountDetailsDto> getUsersList() {
+        return userService.findAll()
+                .stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @PreAuthorize("isAuthenticated() and hasRole('ROLE_ADMIN')")
+    @PutMapping("/role")
+    public void editUserRole(@RequestBody RoleChangeRequestDto requestDto) {
+        if (requestDto.isAdd()) {
+            userService.grantRole(requestDto.getUserEmail(), requestDto.getRole());
+        } else {
+            userService.revokeRole(requestDto.getUserEmail(), requestDto.getRole());
+        }
+    }
+
+
+    private UserAccountDetailsDto mapToDto(UserAccount model) {
+        List<String> roles = model.getRoles()
                 .stream()
                 .map(Role::getName)
                 .collect(Collectors.toList());
 
-        UserAccountDetailsDto accountDetailsDto = UserAccountDetailsDto.builder()
-                .email(userAccount.getEmail())
-                .firstName(userAccount.getFirstName())
-                .lastName(userAccount.getLastName())
+        return UserAccountDetailsDto.builder()
+                .email(model.getEmail())
+                .firstName(model.getFirstName())
+                .lastName(model.getLastName())
                 .roles(roles)
                 .build();
-        return ResponseEntity.ok(accountDetailsDto);
     }
 }
