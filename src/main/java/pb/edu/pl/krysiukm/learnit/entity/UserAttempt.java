@@ -23,7 +23,8 @@ public class UserAttempt {
     private String id;
 
     @JoinColumn(name = "USER_ATTEMPT_ID")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL)
+    @OrderBy("date asc")
     private Set<HistoryEntry> historyEntries;
 
     @JsonIgnore

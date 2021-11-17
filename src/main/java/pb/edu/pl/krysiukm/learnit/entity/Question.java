@@ -16,7 +16,9 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 999)
     private String body;
+    @Column(length = 999)
     private String codeAttachment;
     private String codeLang;
 

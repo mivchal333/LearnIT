@@ -22,6 +22,7 @@ public class TechnologyController {
     private final FileResolver fileResolver;
     private final QuestionService questionService;
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping
     public Technology create(@RequestBody TechnologyEntity technologyEntity) {
         TechnologyEntity entity = technologyService.create(technologyEntity);
@@ -51,6 +52,7 @@ public class TechnologyController {
         return mapToTechnology(entity);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         technologyService.remove(id);
