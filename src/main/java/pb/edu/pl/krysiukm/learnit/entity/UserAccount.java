@@ -26,21 +26,8 @@ public class UserAccount {
     @Column(length = 60)
     private String password;
 
-    private boolean enabled;
-
-    private boolean isUsing2FA;
-
-    private String secret;
-
-    //
-
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "USERS_ROLES", joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @JoinTable(name = "USERS_ROLES", joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ROLE_NAME", referencedColumnName = "NAME"))
     private Collection<Role> roles;
 
-    public UserAccount() {
-        super();
-//        this.secret = Base32.random();
-        this.enabled = false;
-    }
 }
