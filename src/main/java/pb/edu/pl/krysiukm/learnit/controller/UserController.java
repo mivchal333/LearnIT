@@ -69,7 +69,6 @@ public class UserController {
         }
     }
 
-
     private UserAccountDetailsDto mapToDto(UserAccount model) {
         List<String> roles = model.getRoles()
                 .stream()
@@ -81,6 +80,7 @@ public class UserController {
                 .firstName(model.getFirstName())
                 .lastName(model.getLastName())
                 .roles(roles)
+                .createDate(model.getCreateDate().toEpochMilli())
                 .points(model.getPoints())
                 .build();
     }

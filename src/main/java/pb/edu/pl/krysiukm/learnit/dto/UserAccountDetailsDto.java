@@ -13,4 +13,5 @@ public class UserAccountDetailsDto {
     private String email;
     private Long points;
     private List<String> roles;
+    private Long createDate;
 }
