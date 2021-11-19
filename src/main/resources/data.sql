@@ -33,7 +33,7 @@ INSERT INTO PUBLIC.TECHNOLOGY_ENTITY (ID, CREATE_DATE, UPDATE_DATE, DESCRIPTION,
 VALUES (1, '2021-11-10 20:18:34.188138', '2021-11-10 20:26:08.386956',
         'JavaScript (JS) to skryptowy (interpretowany lub kompilowany metodą JIT) język programowania, w którym funkcje są "obywatelami pierwszej kategorii" - obiektami, które można przechowywać w zmiennych jako referencje i przekazywać jak każde inne obiekty. Chociaż JavaScript jest najbardziej znany jako język skryptowy dla stron internetowych, używa go również wiele środowisk poza przeglądarką, takich jak Node.js, Apache CouchDB czy Adobe Acrobat. JavaScript jest językiem opartym na prototypach, wielu paradygmatach, dynamicznej składni, zorientowanym obiektowo, o stylu imperatywnym i deklaratywnym (np. programowanie funkcyjne).
 Ta sekcja naszego serwisu jest poświęcona samemu językowi JavaScript, a nie zagadnieniom związanym ze stronami internetowymi lub innymi środowiskami hosta. Informacje dotyczące Interfejsów API specyficznych dla stron internetowych, prosimy szukać w źródłach: Internetowe interfesy API i DOM.',
-        '3fb76742-399c-4922-a707-be1170420c79.jpg', 'Java Script');
+        'f5aad04b-d291-475e-b142-d1ce4a3a2f5f.jpg', 'Java Script');
 
 -- Technology 1 Question 1
 INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
@@ -70,7 +70,7 @@ VALUES (8, 'document.getElement("p").innerHTML = "Hello World!";', 2);
 INSERT INTO PUBLIC.TECHNOLOGY_ENTITY (ID, CREATE_DATE, UPDATE_DATE, DESCRIPTION, IMAGE, NAME)
 VALUES (2, '2021-11-10 20:18:34.188138', '2021-11-10 20:26:08.386956',
         'Java – współbieżny, oparty na klasach, obiektowy język programowania ogólnego zastosowania[5]. Został stworzony przez grupę roboczą pod kierunkiem Jamesa Goslinga z firmy Sun Microsystems. Java jest językiem tworzenia programów źródłowych kompilowanych do kodu bajtowego, czyli postaci wykonywanej przez maszynę wirtualną. Język cechuje się silnym typowaniem. Jego podstawowe koncepcje zostały przejęte z języka Smalltalk (maszyna wirtualna, zarządzanie pamięcią) oraz z języka C++ (duża część składni i słów kluczowych).',
-        '3fb76742-399c-4922-a707-be1170420c79.jpg', 'Java');
+        'c031203d-8f16-4c1d-8850-1ad318890e28.png', 'Java');
 
 -- Technology 2 Question 1
 INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
