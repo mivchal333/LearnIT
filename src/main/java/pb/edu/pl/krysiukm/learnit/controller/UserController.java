@@ -40,14 +40,14 @@ public class UserController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/myAccount")
-    public ResponseEntity getLoggedUserDetails(@AuthenticationPrincipal User user) {
+    public UserAccountDetailsDto getLoggedUserDetails(@AuthenticationPrincipal User user) {
 
         Optional<UserAccount> userAccountOpt = userService.getUserAccount(user.getUsername());
         UserAccount userAccount = userAccountOpt.orElseThrow(() -> new RuntimeException("User not found"));
         UserAccountDetailsDto userAccountDetailsDto = mapToDto(userAccount);
 
 
-        return ResponseEntity.ok(userAccountDetailsDto);
+        return userAccountDetailsDto;
     }
 
     @PreAuthorize("isAuthenticated() and hasRole('ROLE_ADMIN')")
@@ -81,6 +81,7 @@ public class UserController {
                 .firstName(model.getFirstName())
                 .lastName(model.getLastName())
                 .roles(roles)
+                .points(model.getPoints())
                 .build();
     }
 }

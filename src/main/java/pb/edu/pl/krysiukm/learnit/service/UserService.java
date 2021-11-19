@@ -71,4 +71,14 @@ public class UserService {
         Role role = roleRepository.findByName(roleToGrant.name());
         userAccount.getRoles().add(role);
     }
+
+    public void addPoints(String email, int difficulty) {
+        UserAccount userAccount = userRepository.findByEmail(email)
+                .orElseThrow(NotFoundException::new);
+
+        long oldPoints = userAccount.getPoints();
+        long newPoints = oldPoints + difficulty;
+
+        userAccount.setPoints(newPoints);
+    }
 }

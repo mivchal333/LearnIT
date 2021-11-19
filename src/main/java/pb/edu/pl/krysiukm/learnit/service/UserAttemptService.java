@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pb.edu.pl.krysiukm.learnit.entity.*;
 import pb.edu.pl.krysiukm.learnit.repository.UserAttemptRepository;
+import pb.edu.pl.krysiukm.learnit.repository.UserRepository;
 import pb.edu.pl.krysiukm.learnit.service.exception.NotFoundException;
 
 import java.time.Clock;
@@ -16,6 +17,7 @@ public class UserAttemptService {
     private final Clock clock;
     private final UserAttemptRepository userAttemptRepository;
     private final TechnologyService technologyService;
+    private final UserRepository userRepository;
 
     public UserAttempt startQuizAttempt(UserAccount userAccount, Long technologyId) {
         TechnologyEntity technologyEntity = technologyService.getById(technologyId);

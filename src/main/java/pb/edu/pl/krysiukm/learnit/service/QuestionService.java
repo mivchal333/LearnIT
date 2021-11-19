@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import pb.edu.pl.krysiukm.learnit.dto.AnswerSubmit;
 import pb.edu.pl.krysiukm.learnit.dto.question.AnswerPayload;
 import pb.edu.pl.krysiukm.learnit.dto.question.QuestionCreateRequestDto;
-import pb.edu.pl.krysiukm.learnit.dto.question.QuestionMapper;
 import pb.edu.pl.krysiukm.learnit.entity.*;
 import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
 import pb.edu.pl.krysiukm.learnit.model.ProgressWrapper;
@@ -29,7 +28,7 @@ public class QuestionService {
     private final ShowedQuestionService showedQuestionService;
     private final DifficultyService difficultyService;
     private final TechnologyService technologyService;
-    private final QuestionMapper questionMapper;
+    private final UserService userService;
 
     public Question createQuestion(QuestionCreateRequestDto createRequestDto) {
 
@@ -104,6 +103,7 @@ public class QuestionService {
     public AnswerResult submitAnswer(AnswerSubmit submitPayload) throws NotFoundException {
         String attemptId = submitPayload.getAttemptId();
         UserAttempt userAttempt = userAttemptService.getUserAttempt(attemptId);
+        UserAccount userAccount = userAttempt.getUserAccount();
 
         Optional<ShowedQuestion> lastShowedQuestionOpt = showedQuestionService.getLastShowedQuestion(userAttempt);
         ShowedQuestion showedQuestion = lastShowedQuestionOpt.orElseThrow(() -> new RuntimeException("Not found showed question!"));
@@ -116,6 +116,8 @@ public class QuestionService {
         Answer correctAnswer = lastUserQuestion.getCorrectAnswer();
 
         if (correctAnswer.getId().equals(userAnswerId)) {
+            int difficulty = lastUserQuestion.getDifficulty().getValue();
+            userService.addPoints(userAccount.getEmail(), difficulty);
             userAttemptService.addHistoryEntry(attemptId, lastUserQuestion, true);
             return new AnswerResult(true);
         }
