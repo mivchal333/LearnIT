@@ -29,7 +29,7 @@ class TechnologyRepositoryTest {
         ANY_TECHNOLOGY = new Technology("name", "desc", "image.jpg", Collections.emptyList());
         ANY_ANSWER = new Answer("body", "code");
 
-        ANY_QUESTION = new Question(null, "body", "code", "codeaLang", ANY_ANSWER, null, null, 1, Collections.emptyList());
+        ANY_QUESTION = new Question("body", "code", "codeaLang", ANY_ANSWER, null, null, 1, Collections.emptyList());
         ANY_QUESTION.setCorrectAnswer(ANY_ANSWER);
         ANY_QUESTION.setTechnology(ANY_TECHNOLOGY);
 

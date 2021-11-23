@@ -17,7 +17,7 @@ public class HistoryEntry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JsonIgnore
     private Question question;
     private Boolean answerResult;
