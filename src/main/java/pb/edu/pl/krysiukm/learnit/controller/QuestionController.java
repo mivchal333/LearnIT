@@ -5,17 +5,24 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
+import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException;
 import pb.edu.pl.krysiukm.learnit.dto.AnswerSubmit;
 import pb.edu.pl.krysiukm.learnit.dto.GameProgressWrapper;
 import pb.edu.pl.krysiukm.learnit.dto.question.QuestionCreateRequestDto;
 import pb.edu.pl.krysiukm.learnit.dto.question.QuestionMapper;
+import pb.edu.pl.krysiukm.learnit.dto.question.QuestionPreviewDto;
 import pb.edu.pl.krysiukm.learnit.dto.question.QuestionRequestResponseDto;
 import pb.edu.pl.krysiukm.learnit.entity.Question;
 import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
 import pb.edu.pl.krysiukm.learnit.model.ProgressWrapper;
 import pb.edu.pl.krysiukm.learnit.service.QuestionService;
+import pb.edu.pl.krysiukm.learnit.service.TechnologyService;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -25,12 +32,13 @@ public class QuestionController {
 
     private final QuestionService questionService;
     private final QuestionMapper questionMapper;
+    private final TechnologyService technologyService;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<?> createQuestion(@RequestBody QuestionCreateRequestDto questionResponseDto) {
+    public ResponseEntity<?> createQuestion(@RequestBody QuestionCreateRequestDto questionResponseDto, @RequestParam Long technologyId) {
         try {
-            Question question = questionService.createQuestion(questionResponseDto);
+            Question question = questionService.createQuestion(technologyId, questionResponseDto);
             return ResponseEntity.ok(question);
         } catch (Exception e) {
             log.error("[QuestionController] Create question error", e);
@@ -38,7 +46,7 @@ public class QuestionController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/attempt")
     public ResponseEntity<?> getQuestion(@RequestParam String attemptId) {
         Assert.notNull(attemptId, "You must specify attemptId");
         try {
@@ -62,5 +70,34 @@ public class QuestionController {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(answer);
+    }
+
+
+    @GetMapping
+    public List<QuestionPreviewDto> getTechnologyQuestions(@RequestParam Long id) {
+        return technologyService.getById(id)
+                .getQuestions()
+                .stream()
+                .map(questionMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    @PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_ADMIN', 'ROLE_MOD')")
+    @GetMapping("/{id}")
+    public Question getQuestion(@PathVariable Long id) {
+        return questionService.getQuestion(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found question with id " + id));
+    }
+
+    @PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_ADMIN', 'ROLE_MOD')")
+    @PutMapping("/{id}")
+    public Question putQuestion(@PathVariable Long id, @RequestBody QuestionCreateRequestDto questionResponseDto) {
+        return questionService.editQuestion(id, questionResponseDto);
+    }
+
+    @PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_ADMIN', 'ROLE_MOD')")
+    @DeleteMapping("/{id}")
+    public void deleteQuestion(@PathVariable Long id) {
+        questionService.delete(id);
     }
 }

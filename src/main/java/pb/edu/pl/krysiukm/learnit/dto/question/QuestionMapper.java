@@ -27,8 +27,17 @@ public class QuestionMapper {
                 .codeAttachment(question.getCodeAttachment())
                 .codeLang(question.getCodeLang())
                 .answers(answers)
-                .difficultyValue(question.getDifficulty().getValue())
-                .technologyId(question.getTechnologyEntity().getId())
+                .difficultyValue(question.getDifficulty())
+                .technologyId(question.getTechnology().getId())
+                .build();
+    }
+
+    public QuestionPreviewDto mapToDto(Question question) {
+
+        return QuestionPreviewDto.builder()
+                .id(question.getId())
+                .body(question.getBody())
+                .difficulty(question.getDifficulty())
                 .build();
     }
 }

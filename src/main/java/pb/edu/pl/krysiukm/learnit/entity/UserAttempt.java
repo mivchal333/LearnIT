@@ -33,7 +33,7 @@ public class UserAttempt {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
-    private TechnologyEntity technologyEntity;
+    private Technology technology;
 
     @Column(nullable = false)
     private Instant startDate;
@@ -47,9 +47,9 @@ public class UserAttempt {
     @OneToOne(cascade = CascadeType.REMOVE)
     private ShowedQuestion showedQuestion;
 
-    public UserAttempt(UserAccount userAccount, TechnologyEntity technologyEntity, GameType gameType) {
+    public UserAttempt(UserAccount userAccount, Technology technology, GameType gameType) {
         this.userAccount = userAccount;
-        this.technologyEntity = technologyEntity;
+        this.technology = technology;
         this.gameType = gameType;
     }
 

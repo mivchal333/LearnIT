@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import pb.edu.pl.krysiukm.learnit.dto.Technology;
-import pb.edu.pl.krysiukm.learnit.entity.TechnologyEntity;
+import pb.edu.pl.krysiukm.learnit.dto.TechnologyDto;
+import pb.edu.pl.krysiukm.learnit.entity.Technology;
 import pb.edu.pl.krysiukm.learnit.service.FileResolver;
 import pb.edu.pl.krysiukm.learnit.service.QuestionService;
 import pb.edu.pl.krysiukm.learnit.service.TechnologyService;
@@ -24,22 +24,22 @@ public class TechnologyController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping
-    public Technology create(@RequestBody TechnologyEntity technologyEntity) {
-        TechnologyEntity entity = technologyService.create(technologyEntity);
+    public TechnologyDto create(@RequestBody Technology technology) {
+        Technology entity = technologyService.create(technology);
         return mapToTechnology(entity);
     }
 
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/{id}")
-    public Technology create(@PathVariable Long id,
-                             @RequestBody TechnologyEntity technologyEntity) {
-        TechnologyEntity entity = technologyService.update(id, technologyEntity);
+    public TechnologyDto create(@PathVariable Long id,
+                                @RequestBody Technology technology) {
+        Technology entity = technologyService.update(id, technology);
 
         return mapToTechnology(entity);
     }
 
     @GetMapping
-    public List<Technology> getAllTechnologies() {
+    public List<TechnologyDto> getAllTechnologies() {
         return technologyService.getAll()
                 .stream()
                 .map(this::mapToTechnology)
@@ -47,22 +47,22 @@ public class TechnologyController {
     }
 
     @GetMapping("/{id}")
-    public Technology getTechnology(@PathVariable Long id) {
-        TechnologyEntity entity = technologyService.getById(id);
+    public TechnologyDto getTechnology(@PathVariable Long id) {
+        Technology entity = technologyService.getById(id);
         return mapToTechnology(entity);
     }
 
     @PreAuthorize("isAuthenticated()")
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         technologyService.remove(id);
         return ResponseEntity.noContent().build();
     }
 
-    private Technology mapToTechnology(TechnologyEntity technology) {
+    private TechnologyDto mapToTechnology(Technology technology) {
         long questionsCount = questionService.countQuestions(technology.getId());
 
-        Technology.TechnologyBuilder builder = Technology.builder()
+        TechnologyDto.TechnologyDtoBuilder builder = TechnologyDto.builder()
                 .id(technology.getId())
                 .name(technology.getName())
                 .description(technology.getDescription())

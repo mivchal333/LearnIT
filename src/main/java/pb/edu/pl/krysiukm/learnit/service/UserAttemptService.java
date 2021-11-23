@@ -20,7 +20,7 @@ public class UserAttemptService {
     private final UserRepository userRepository;
 
     public UserAttempt startQuizAttempt(UserAccount userAccount, Long technologyId) {
-        TechnologyEntity technologyEntity = technologyService.getById(technologyId);
+        Technology technologyEntity = technologyService.getById(technologyId);
         UserAttempt attempt = new UserAttempt(userAccount, technologyEntity, UserAttempt.GameType.QUIZ);
         attempt.setStartDate(clock.instant());
         return userAttemptRepository.save(attempt);
@@ -53,9 +53,9 @@ public class UserAttemptService {
     }
 
     public List<UserAttempt> getUserHistory(UserAccount userAccount, Long technologyId) {
-        TechnologyEntity technologyEntity = technologyService.getById(technologyId);
+        Technology technologyEntity = technologyService.getById(technologyId);
 
-        return userAttemptRepository.findAllByUserAccountAndTechnologyEntityOrderByStartDateDesc(userAccount, technologyEntity);
+        return userAttemptRepository.findAllByUserAccountAndTechnologyOrderByStartDateDesc(userAccount, technologyEntity);
     }
 
     public List<UserAttempt> getUserHistory(UserAccount userAccount) {

@@ -11,7 +11,7 @@ public class CardMapper {
         Question question = questionProgress.getEntry();
         return CardDto.builder()
                 .body(question.getBody())
-                .difficultyValue(question.getDifficulty().getValue())
+                .difficultyValue(question.getDifficulty())
                 .codeAttachment(question.getCodeAttachment())
                 .codeLang(question.getCodeLang())
                 .answer(question.getCorrectAnswer())

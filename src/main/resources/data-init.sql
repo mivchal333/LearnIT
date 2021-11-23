@@ -1,18 +1,6 @@
-INSERT INTO PUBLIC.DIFFICULTY (VALUE, LABEL)
-VALUES (1, 'Beginner');
-INSERT INTO PUBLIC.DIFFICULTY (VALUE, LABEL)
-VALUES (2, 'Easy');
-INSERT INTO PUBLIC.DIFFICULTY (VALUE, LABEL)
-VALUES (3, 'Medium');
-INSERT INTO PUBLIC.DIFFICULTY (VALUE, LABEL)
-VALUES (4, 'Hard');
-INSERT INTO PUBLIC.DIFFICULTY (VALUE, LABEL)
-VALUES (5, 'Expert');
-
-
-INSERT INTO PUBLIC.USER_ACCOUNT (EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, CREATE_DATE)
+INSERT INTO PUBLIC.USER_ACCOUNT (EMAIL, FIRST_NAME, LAST_NAME, PASSWORD, CREATE_DATE, POINTS)
 VALUES ('admin@admin.com', 'admin', 'admin',
-        '$2a$11$02x3bN05vZqctGn.J0XJXuPvSdkN3DDXoDJeXbmAQU218zVzsE5ge', {ts '2012-09-17 18:47:52.69'});
+        '$2a$11$02x3bN05vZqctGn.J0XJXuPvSdkN3DDXoDJeXbmAQU218zVzsE5ge', {ts '2012-09-17 18:47:52.69'}, 11);
 
 insert into ROLE (NAME)
 values ('ROLE_ADMIN');
@@ -29,7 +17,7 @@ insert into USERS_ROLES (USER_EMAIL, ROLE_NAME)
 VALUES ('admin@admin.com', 'ROLE_ADMIN');
 
 -- Technology 1
-INSERT INTO PUBLIC.TECHNOLOGY_ENTITY (ID, CREATE_DATE, UPDATE_DATE, DESCRIPTION, IMAGE, NAME)
+INSERT INTO PUBLIC.TECHNOLOGY (ID, CREATE_DATE, UPDATE_DATE, DESCRIPTION, IMAGE, NAME)
 VALUES (1, '2021-11-10 20:18:34.188138', '2021-11-10 20:26:08.386956',
         'JavaScript (JS) to skryptowy (interpretowany lub kompilowany metodą JIT) język programowania, w którym funkcje są "obywatelami pierwszej kategorii" - obiektami, które można przechowywać w zmiennych jako referencje i przekazywać jak każde inne obiekty. Chociaż JavaScript jest najbardziej znany jako język skryptowy dla stron internetowych, używa go również wiele środowisk poza przeglądarką, takich jak Node.js, Apache CouchDB czy Adobe Acrobat. JavaScript jest językiem opartym na prototypach, wielu paradygmatach, dynamicznej składni, zorientowanym obiektowo, o stylu imperatywnym i deklaratywnym (np. programowanie funkcyjne).
 Ta sekcja naszego serwisu jest poświęcona samemu językowi JavaScript, a nie zagadnieniom związanym ze stronami internetowymi lub innymi środowiskami hosta. Informacje dotyczące Interfejsów API specyficznych dla stron internetowych, prosimy szukać w źródłach: Internetowe interfesy API i DOM.',
@@ -39,7 +27,7 @@ Ta sekcja naszego serwisu jest poświęcona samemu językowi JavaScript, a nie z
 INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
 VALUES (1, '<script>', null, null);
 
-INSERT INTO PUBLIC.QUESTION (ID, BODY, CORRECT_ANSWER_ID, CREATOR_EMAIL, DIFFICULTY_VALUE, TECHNOLOGY_ENTITY_ID,
+INSERT INTO PUBLIC.QUESTION (ID, BODY, CORRECT_ANSWER_ID, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
                              CODE_ATTACHMENT, CODE_LANG)
 VALUES (1, 'W jakim elemencie HTML umieszczamy kod Javascript?', 1, 'admin@admin.com', 2, 1, null, null);
 
@@ -54,7 +42,7 @@ VALUES (4, '<scriptiong', 1, null);
 INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
 VALUES (5, ' document.getElementById("demo").innerHTML = "Hello World!";', null, null);
 
-INSERT INTO PUBLIC.QUESTION (ID, BODY, CORRECT_ANSWER_ID, CREATOR_EMAIL, DIFFICULTY_VALUE, TECHNOLOGY_ENTITY_ID,
+INSERT INTO PUBLIC.QUESTION (ID, BODY, CORRECT_ANSWER_ID, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
                              CODE_ATTACHMENT, CODE_LANG)
 VALUES (2, 'Jaki jest poprawny kod JavaScript do zmiany zwartości elementu HTML przedstawionego niżej?', 5, null, 2, 1,
         '<p id="demo">This is a demonstration.</p>', 'html');
@@ -67,7 +55,7 @@ INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID)
 VALUES (8, 'document.getElement("p").innerHTML = "Hello World!";', 2);
 
 -- Technology 2
-INSERT INTO PUBLIC.TECHNOLOGY_ENTITY (ID, CREATE_DATE, UPDATE_DATE, DESCRIPTION, IMAGE, NAME)
+INSERT INTO PUBLIC.TECHNOLOGY (ID, CREATE_DATE, UPDATE_DATE, DESCRIPTION, IMAGE, NAME)
 VALUES (2, '2021-11-10 20:18:34.188138', '2021-11-10 20:26:08.386956',
         'Java – współbieżny, oparty na klasach, obiektowy język programowania ogólnego zastosowania[5]. Został stworzony przez grupę roboczą pod kierunkiem Jamesa Goslinga z firmy Sun Microsystems. Java jest językiem tworzenia programów źródłowych kompilowanych do kodu bajtowego, czyli postaci wykonywanej przez maszynę wirtualną. Język cechuje się silnym typowaniem. Jego podstawowe koncepcje zostały przejęte z języka Smalltalk (maszyna wirtualna, zarządzanie pamięcią) oraz z języka C++ (duża część składni i słów kluczowych).',
         'c031203d-8f16-4c1d-8850-1ad318890e28.png', 'Java');
@@ -76,7 +64,7 @@ VALUES (2, '2021-11-10 20:18:34.188138', '2021-11-10 20:26:08.386956',
 INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
 VALUES (9, ' System.out.println("Hello World");', null, null);
 
-INSERT INTO PUBLIC.QUESTION (ID, BODY, CORRECT_ANSWER_ID, CREATOR_EMAIL, DIFFICULTY_VALUE, TECHNOLOGY_ENTITY_ID,
+INSERT INTO PUBLIC.QUESTION (ID, BODY, CORRECT_ANSWER_ID, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
                              CODE_ATTACHMENT, CODE_LANG)
 VALUES (3, 'Jaki jest poprawna składnia do wypisania "Hello World w Javie?', 5, null, 1, 2, null, null);
 
@@ -91,7 +79,7 @@ VALUES (12, ' print ("Hello World");', 3, null);
 INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
 VALUES (13, ' e d c b a -1', null, null);
 
-INSERT INTO PUBLIC.QUESTION (ID, BODY, CORRECT_ANSWER_ID, CREATOR_EMAIL, DIFFICULTY_VALUE, TECHNOLOGY_ENTITY_ID,
+INSERT INTO PUBLIC.QUESTION (ID, BODY, CORRECT_ANSWER_ID, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
                              CODE_ATTACHMENT, CODE_LANG)
 VALUES (4, 'Co wypisze kod?', 5, null, 3, 2, 'import java.util.Arrays;
 import java.util.Comparator;
@@ -122,10 +110,10 @@ INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
 VALUES (16, ' e b a d c', 4, null);
 
 
-INSERT INTO PUBLIC.USER_ATTEMPT (ID, END_DATE, GAME_TYPE, START_DATE, TECHNOLOGY_ENTITY_ID, USER_ACCOUNT_EMAIL)
+INSERT INTO PUBLIC.USER_ATTEMPT (ID, END_DATE, GAME_TYPE, START_DATE, TECHNOLOGY_ID, USER_ACCOUNT_EMAIL)
 VALUES ('fbc02259-c608-493d-b13e-592d9314f13f', null, 'QUIZ', '2021-11-10 20:29:07.091371', 1, 'admin@admin.com');
 
-INSERT INTO PUBLIC.USER_ATTEMPT (ID, END_DATE, GAME_TYPE, START_DATE, TECHNOLOGY_ENTITY_ID, USER_ACCOUNT_EMAIL)
+INSERT INTO PUBLIC.USER_ATTEMPT (ID, END_DATE, GAME_TYPE, START_DATE, TECHNOLOGY_ID, USER_ACCOUNT_EMAIL)
 VALUES ('jakas-tam-proba', null, 'QUIZ', '2021-11-09 20:29:07.091371', 1, 'admin@admin.com');
 
 INSERT INTO PUBLIC.HISTORY_ENTRY (ID, ANSWER_RESULT, DATE, QUESTION_ID, USER_ATTEMPT_ID)

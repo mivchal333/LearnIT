@@ -10,12 +10,10 @@ import javax.sql.DataSource;
 
 @Configuration
 public class DataInitConfig {
-
-
     @Bean
     public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
-        resourceDatabasePopulator.addScript(new ClassPathResource("/data.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/data-init.sql"));
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
         dataSourceInitializer.setDataSource(dataSource);
         dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);

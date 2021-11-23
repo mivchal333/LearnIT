@@ -1,5 +1,6 @@
 package pb.edu.pl.krysiukm.learnit.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,18 +23,18 @@ public class Question {
     private String codeAttachment;
     private String codeLang;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Answer correctAnswer;
 
+    @JsonIgnore
     @ManyToOne
     private UserAccount creator;
     @ManyToOne
-    private TechnologyEntity technologyEntity;
-    @ManyToOne
-    private Difficulty difficulty;
+    private Technology technology;
+    private Integer difficulty;
 
     @JoinColumn(name = "QUESTION_ID")
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> badAnswers;
 }
 

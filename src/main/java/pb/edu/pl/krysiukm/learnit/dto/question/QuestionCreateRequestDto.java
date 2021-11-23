@@ -11,7 +11,6 @@ public class QuestionCreateRequestDto {
     private String body;
     private String codeAttachment;
     private String codeLang;
-    private Long technologyId;
     private Integer difficultyValue;
     private AnswerPayload correctAnswer;
     private List<AnswerPayload> badAnswers;

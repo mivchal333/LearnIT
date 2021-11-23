@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Technology {
+public class TechnologyDto {
     private Long id;
     private String name;
     private String description;

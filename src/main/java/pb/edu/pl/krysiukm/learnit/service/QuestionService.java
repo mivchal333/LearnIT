@@ -4,6 +4,8 @@ import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException;
 import pb.edu.pl.krysiukm.learnit.dto.AnswerSubmit;
 import pb.edu.pl.krysiukm.learnit.dto.question.AnswerPayload;
 import pb.edu.pl.krysiukm.learnit.dto.question.QuestionCreateRequestDto;
@@ -19,25 +21,55 @@ import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
-@Service
 @Slf4j
+@Service
+@Transactional
+@RequiredArgsConstructor
 public class QuestionService {
     private final QuestionRepository questionRepository;
     private final UserAttemptService userAttemptService;
     private final ShowedQuestionService showedQuestionService;
-    private final DifficultyService difficultyService;
     private final TechnologyService technologyService;
     private final UserService userService;
 
-    public Question createQuestion(QuestionCreateRequestDto createRequestDto) {
+    public Optional<Question> getQuestion(Long id) {
+        return questionRepository.findById(id);
+    }
+
+    public Question editQuestion(Long id, QuestionCreateRequestDto createRequestDto) {
+        Question question = questionRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Not found question with id " + id));
+
+        Answer correctAnswer = question.getCorrectAnswer();
+        correctAnswer.setBody(createRequestDto.getCorrectAnswer().getBody());
+        correctAnswer.setCode(createRequestDto.getCorrectAnswer().getCode());
+
+        for (int i = 0; i < question.getBadAnswers().size(); i++) {
+            Answer answer = question.getBadAnswers().get(i);
+            AnswerPayload answerPayload = createRequestDto.getBadAnswers().get(i);
+            answer.setBody(answerPayload.getBody());
+            answer.setCode(answerPayload.getCode());
+        }
+
+        question.setDifficulty(createRequestDto.getDifficultyValue());
+
+        question.setCodeAttachment(createRequestDto.getCodeAttachment());
+        question.setCodeLang(createRequestDto.getCodeLang());
+
+        return questionRepository.save(question);
+    }
+
+    public void delete(Long id) {
+        questionRepository.deleteById(id);
+    }
+
+    public Question createQuestion(Long technologyId, QuestionCreateRequestDto createRequestDto) {
 
         AnswerPayload correctAnswerPayload = createRequestDto.getCorrectAnswer();
         Answer correctAnswer = new Answer(correctAnswerPayload.getBody(), correctAnswerPayload.getCode());
 
-        TechnologyEntity technologyEntity = technologyService.getById(createRequestDto.getTechnologyId());
+        Technology technology = technologyService.getById(technologyId);
 
-        Difficulty difficulty = difficultyService.getByValue(createRequestDto.getDifficultyValue());
 
         List<Answer> badAnswers = createRequestDto.getBadAnswers().stream()
                 .map(answerPayload -> new Answer(answerPayload.getBody(), answerPayload.getCode()))
@@ -48,8 +80,8 @@ public class QuestionService {
                 .codeAttachment(createRequestDto.getCodeAttachment())
                 .codeLang(createRequestDto.getCodeLang())
                 .correctAnswer(correctAnswer)
-                .technologyEntity(technologyEntity)
-                .difficulty(difficulty)
+                .technology(technology)
+                .difficulty(createRequestDto.getDifficultyValue())
                 .badAnswers(badAnswers)
                 .build();
 
@@ -73,13 +105,13 @@ public class QuestionService {
                 .stream().map(Question::getId)
                 .collect(Collectors.toList());
 
-        TechnologyEntity technologyEntity = userAttempt.getTechnologyEntity();
+        Technology technologyEntity = userAttempt.getTechnology();
 
         List<Question> foundQuestions;
         if (exposedQuestionsIds.isEmpty()) {
-            foundQuestions = questionRepository.findAllByTechnologyEntity(technologyEntity);
+            foundQuestions = questionRepository.findAllByTechnology(technologyEntity);
         } else {
-            foundQuestions = questionRepository.findAllByTechnologyEntityAndIdNotIn(technologyEntity, exposedQuestionsIds);
+            foundQuestions = questionRepository.findAllByTechnologyAndIdNotIn(technologyEntity, exposedQuestionsIds);
         }
 
         if (foundQuestions.isEmpty()) {
@@ -96,7 +128,7 @@ public class QuestionService {
         return ProgressWrapper.<Question>builder()
                 .entry(randomQuestion)
                 .actual(userAttemptService.getExposedQuestions(attemptId).size())
-                .total(questionRepository.findAllByTechnologyEntity(technologyEntity).size())
+                .total(questionRepository.findAllByTechnology(technologyEntity).size())
                 .build();
     }
 
@@ -116,7 +148,7 @@ public class QuestionService {
         Answer correctAnswer = lastUserQuestion.getCorrectAnswer();
 
         if (correctAnswer.getId().equals(userAnswerId)) {
-            int difficulty = lastUserQuestion.getDifficulty().getValue();
+            int difficulty = lastUserQuestion.getDifficulty();
             userService.addPoints(userAccount.getEmail(), difficulty);
             userAttemptService.addHistoryEntry(attemptId, lastUserQuestion, true);
             return new AnswerResult(true);
@@ -126,6 +158,6 @@ public class QuestionService {
     }
 
     public long countQuestions(Long technologyId) {
-        return questionRepository.countAllByTechnologyEntityId(technologyId);
+        return questionRepository.countAllByTechnologyId(technologyId);
     }
 }

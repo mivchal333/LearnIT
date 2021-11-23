@@ -7,7 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException;
-import pb.edu.pl.krysiukm.learnit.entity.TechnologyEntity;
+import pb.edu.pl.krysiukm.learnit.entity.Technology;
 import pb.edu.pl.krysiukm.learnit.repository.QuestionRepository;
 import pb.edu.pl.krysiukm.learnit.repository.ShowedQuestionRepository;
 import pb.edu.pl.krysiukm.learnit.repository.TechnologyRepository;
@@ -28,26 +28,26 @@ public class TechnologyService {
     private final FilesStorageService storageService;
     private final ShowedQuestionRepository showedQuestionRepository;
 
-    public TechnologyEntity getById(Long id) {
+    public Technology getById(Long id) {
         return technologyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Technology with id: %s not found.", id)));
     }
 
     @PreAuthorize("isAuthenticated()")
-    public TechnologyEntity create(TechnologyEntity technologyEntity) {
-        return technologyRepository.save(technologyEntity);
+    public Technology create(Technology technology) {
+        return technologyRepository.save(technology);
     }
 
-    public List<TechnologyEntity> getAll() {
+    public List<Technology> getAll() {
         return technologyRepository.findAll();
     }
 
     public void remove(Long id) {
-        TechnologyEntity entity = technologyRepository.findById(id)
+        Technology entity = technologyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found technology with id: " + id));
 
-        userAttemptRepository.deleteAllByTechnologyEntityId(id);
-        questionRepository.deleteAllByTechnologyEntityId(id);
+        userAttemptRepository.deleteAllByTechnologyId(id);
+        questionRepository.deleteAllByTechnologyId(id);
 
         try {
             Optional.ofNullable(entity.getImage())
@@ -59,32 +59,32 @@ public class TechnologyService {
         technologyRepository.deleteById(id);
     }
 
-    public TechnologyEntity update(Long id, TechnologyEntity technologyEntity) {
+    public Technology update(Long id, Technology technology) {
 
-        TechnologyEntity oldTechnologyEntity = technologyRepository.findById(id)
+        Technology oldTechnology = technologyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found technology with id: " + id));
 
-        if (!technologyEntity.getName().equals(oldTechnologyEntity.getName())) {
-            oldTechnologyEntity.setName(technologyEntity.getName());
+        if (!technology.getName().equals(oldTechnology.getName())) {
+            oldTechnology.setName(technology.getName());
         }
 
-        if (!technologyEntity.getDescription().equals(oldTechnologyEntity.getDescription())) {
-            oldTechnologyEntity.setDescription(technologyEntity.getDescription());
+        if (!technology.getDescription().equals(oldTechnology.getDescription())) {
+            oldTechnology.setDescription(technology.getDescription());
         }
 
-        String oldImage = oldTechnologyEntity.getImage();
+        String oldImage = oldTechnology.getImage();
 
-        if (isNewImage(technologyEntity, oldImage)) {
-            oldTechnologyEntity.setImage(technologyEntity.getImage());
+        if (isNewImage(technology, oldImage)) {
+            oldTechnology.setImage(technology.getImage());
             storageService.deleteFile(oldImage);
         }
 
-        return technologyRepository.save(oldTechnologyEntity);
+        return technologyRepository.save(oldTechnology);
     }
 
-    private boolean isNewImage(TechnologyEntity technologyEntity, @Nullable String oldImage) {
+    private boolean isNewImage(Technology technology, @Nullable String oldImage) {
         return Optional.ofNullable(oldImage)
-                .map(image -> !image.equals(technologyEntity.getImage()))
+                .map(image -> !image.equals(technology.getImage()))
                 .orElse(false);
     }
 }
