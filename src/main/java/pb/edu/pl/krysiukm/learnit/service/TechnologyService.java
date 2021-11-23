@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException;
+import pb.edu.pl.krysiukm.learnit.entity.Question;
 import pb.edu.pl.krysiukm.learnit.entity.Technology;
 import pb.edu.pl.krysiukm.learnit.repository.QuestionRepository;
 import pb.edu.pl.krysiukm.learnit.repository.ShowedQuestionRepository;
@@ -16,6 +17,7 @@ import pb.edu.pl.krysiukm.learnit.service.exception.FileDeleteException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -39,7 +41,14 @@ public class TechnologyService {
     }
 
     public List<Technology> getAll() {
-        return technologyRepository.findAll();
+        return technologyRepository.findAll().stream()
+                .peek(technology -> {
+                    List<Question> publishedQuestions = technology.getQuestions().stream()
+                            .filter(Question::isPublished)
+                            .collect(Collectors.toList());
+                    technology.setQuestions(publishedQuestions);
+
+                }).collect(Collectors.toList());
     }
 
     public void remove(Long id) {

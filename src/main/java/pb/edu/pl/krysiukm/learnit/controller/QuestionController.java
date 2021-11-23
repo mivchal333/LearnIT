@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException;
 import pb.edu.pl.krysiukm.learnit.dto.AnswerSubmit;
 import pb.edu.pl.krysiukm.learnit.dto.GameProgressWrapper;
-import pb.edu.pl.krysiukm.learnit.dto.question.QuestionCreateRequestDto;
-import pb.edu.pl.krysiukm.learnit.dto.question.QuestionMapper;
-import pb.edu.pl.krysiukm.learnit.dto.question.QuestionPreviewDto;
-import pb.edu.pl.krysiukm.learnit.dto.question.QuestionRequestResponseDto;
+import pb.edu.pl.krysiukm.learnit.dto.question.*;
 import pb.edu.pl.krysiukm.learnit.entity.Question;
 import pb.edu.pl.krysiukm.learnit.model.AnswerResult;
 import pb.edu.pl.krysiukm.learnit.model.ProgressWrapper;
@@ -99,5 +96,10 @@ public class QuestionController {
     @DeleteMapping("/{id}")
     public void deleteQuestion(@PathVariable Long id) {
         questionService.delete(id);
+    }
+
+    @PostMapping("/{id}/published")
+    public void setPublishState(@PathVariable Long id, @RequestBody ChangePublishStatePayload payload) {
+        questionService.setPublishState(id, payload.isPublished());
     }
 }

@@ -38,6 +38,7 @@ public class QuestionMapper {
                 .id(question.getId())
                 .body(question.getBody())
                 .difficulty(question.getDifficulty())
+                .published(question.isPublished())
                 .build();
     }
 }

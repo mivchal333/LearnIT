@@ -28,8 +28,8 @@ INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
 VALUES (1, '<script>', null, null);
 
 INSERT INTO PUBLIC.QUESTION (ID, BODY, CORRECT_ANSWER_ID, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
-                             CODE_ATTACHMENT, CODE_LANG)
-VALUES (1, 'W jakim elemencie HTML umieszczamy kod Javascript?', 1, 'admin@admin.com', 2, 1, null, null);
+                             CODE_ATTACHMENT, CODE_LANG, PUBLISHED)
+VALUES (1, 'W jakim elemencie HTML umieszczamy kod Javascript?', 1, 'admin@admin.com', 2, 1, null, null, false);
 
 INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID)
 VALUES (2, '<js>', 1);
@@ -43,9 +43,9 @@ INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
 VALUES (5, ' document.getElementById("demo").innerHTML = "Hello World!";', null, null);
 
 INSERT INTO PUBLIC.QUESTION (ID, BODY, CORRECT_ANSWER_ID, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
-                             CODE_ATTACHMENT, CODE_LANG)
+                             CODE_ATTACHMENT, CODE_LANG, PUBLISHED)
 VALUES (2, 'Jaki jest poprawny kod JavaScript do zmiany zwartości elementu HTML przedstawionego niżej?', 5, null, 2, 1,
-        '<p id="demo">This is a demonstration.</p>', 'html');
+        '<p id="demo">This is a demonstration.</p>', 'html', false);
 
 INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID)
 VALUES (6, 'document.getElementByName("p").innerHTML = "Hello World!";', 2);
@@ -65,8 +65,8 @@ INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
 VALUES (9, ' System.out.println("Hello World");', null, null);
 
 INSERT INTO PUBLIC.QUESTION (ID, BODY, CORRECT_ANSWER_ID, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
-                             CODE_ATTACHMENT, CODE_LANG)
-VALUES (3, 'Jaki jest poprawna składnia do wypisania "Hello World w Javie?', 5, null, 1, 2, null, null);
+                             CODE_ATTACHMENT, CODE_LANG, PUBLISHED)
+VALUES (3, 'Jaki jest poprawna składnia do wypisania "Hello World w Javie?', 5, null, 1, 2, null, null, true);
 
 INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID)
 VALUES (10, ' echo("Hello World");', 3);
@@ -80,7 +80,7 @@ INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
 VALUES (13, ' e d c b a -1', null, null);
 
 INSERT INTO PUBLIC.QUESTION (ID, BODY, CORRECT_ANSWER_ID, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
-                             CODE_ATTACHMENT, CODE_LANG)
+                             CODE_ATTACHMENT, CODE_LANG, PUBLISHED)
 VALUES (4, 'Co wypisze kod?', 5, null, 3, 2, 'import java.util.Arrays;
 import java.util.Comparator;
 public class ComparatorTest {
@@ -100,7 +100,7 @@ public int compare(String s1, String s2)
 return s2.compareTo(s1);
 }
 }
-}', 'java');
+}', 'java', true);
 
 INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID)
 VALUES (14, ' a b c 0 e d', 4);

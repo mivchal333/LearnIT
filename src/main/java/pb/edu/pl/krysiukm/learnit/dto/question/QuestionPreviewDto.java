@@ -9,6 +9,7 @@ public class QuestionPreviewDto {
     private Long id;
     private String body;
     private int difficulty;
+    private boolean published;
 
     public QuestionPreviewDto(Question question) {
         this.id = question.getId();
@@ -17,9 +18,10 @@ public class QuestionPreviewDto {
     }
 
     @Builder
-    public QuestionPreviewDto(Long id, String body, int difficulty) {
+    public QuestionPreviewDto(Long id, String body, int difficulty, boolean published) {
         this.id = id;
         this.body = body;
         this.difficulty = difficulty;
+        this.published = published;
     }
 }

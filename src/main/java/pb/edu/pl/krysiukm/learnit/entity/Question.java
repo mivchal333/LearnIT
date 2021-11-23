@@ -22,6 +22,7 @@ public class Question {
     @Column(length = 999)
     private String codeAttachment;
     private String codeLang;
+    private boolean published;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Answer correctAnswer;

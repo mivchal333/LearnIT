@@ -83,6 +83,7 @@ public class QuestionService {
                 .technology(technology)
                 .difficulty(createRequestDto.getDifficultyValue())
                 .badAnswers(badAnswers)
+                .published(false)
                 .build();
 
         return createQuestion(question);
@@ -109,9 +110,9 @@ public class QuestionService {
 
         List<Question> foundQuestions;
         if (exposedQuestionsIds.isEmpty()) {
-            foundQuestions = questionRepository.findAllByTechnology(technologyEntity);
+            foundQuestions = questionRepository.findAllByTechnologyAndPublishedTrue(technologyEntity);
         } else {
-            foundQuestions = questionRepository.findAllByTechnologyAndIdNotIn(technologyEntity, exposedQuestionsIds);
+            foundQuestions = questionRepository.findAllByTechnologyAndIdNotInAndPublishedTrue(technologyEntity, exposedQuestionsIds);
         }
 
         if (foundQuestions.isEmpty()) {
@@ -128,7 +129,7 @@ public class QuestionService {
         return ProgressWrapper.<Question>builder()
                 .entry(randomQuestion)
                 .actual(userAttemptService.getExposedQuestions(attemptId).size())
-                .total(questionRepository.findAllByTechnology(technologyEntity).size())
+                .total(questionRepository.findAllByTechnologyAndPublishedTrue(technologyEntity).size())
                 .build();
     }
 
@@ -159,5 +160,9 @@ public class QuestionService {
 
     public long countQuestions(Long technologyId) {
         return questionRepository.countAllByTechnologyId(technologyId);
+    }
+
+    public void setPublishState(Long id, Boolean published) {
+        questionRepository.setPublishedStateForQuestionId(id, published);
     }
 }

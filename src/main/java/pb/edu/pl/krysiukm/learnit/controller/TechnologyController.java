@@ -60,13 +60,12 @@ public class TechnologyController {
     }
 
     private TechnologyDto mapToTechnology(Technology technology) {
-        long questionsCount = questionService.countQuestions(technology.getId());
 
         TechnologyDto.TechnologyDtoBuilder builder = TechnologyDto.builder()
                 .id(technology.getId())
                 .name(technology.getName())
                 .description(technology.getDescription())
-                .questionCount(questionsCount);
+                .questionCount(technology.getQuestions().size());
 
         Optional.ofNullable(technology.getImage())
                 .ifPresent((image) -> builder.image(fileResolver.resolveFile(image)));
