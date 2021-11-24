@@ -24,35 +24,32 @@ Ta sekcja naszego serwisu jest poświęcona samemu językowi JavaScript, a nie z
         'f5aad04b-d291-475e-b142-d1ce4a3a2f5f.jpg', 'Java Script');
 
 -- Technology 1 Question 1
-INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
-VALUES (1, '<script>', null, null);
 
-INSERT INTO PUBLIC.QUESTION (ID, BODY, CORRECT_ANSWER_ID, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
+INSERT INTO PUBLIC.QUESTION (ID, BODY, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
                              CODE_ATTACHMENT, CODE_LANG, PUBLISHED)
-VALUES (1, 'W jakim elemencie HTML umieszczamy kod Javascript?', 1, 'admin@admin.com', 2, 1, null, null, false);
-
-INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID)
-VALUES (2, '<js>', 1);
-INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
-VALUES (3, '<javascript>', 1, null);
-INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
-VALUES (4, '<scriptiong', 1, null);
+VALUES (1, 'W jakim elemencie HTML umieszczamy kod Javascript?', 'admin@admin.com', 2, 1, null, null, false);
+INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE, CORRECT)
+VALUES (1, '<script>', 1, null, true);
+INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE, CORRECT)
+VALUES (2, '<js>', 1, null, false);
+INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE, CORRECT)
+VALUES (3, '<javascript>', 1, null, false);
+INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE, CORRECT)
+VALUES (4, '<scriptiong', 1, null, false);
 
 -- Technology 1 Question 2
-INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
-VALUES (5, ' document.getElementById("demo").innerHTML = "Hello World!";', null, null);
-
-INSERT INTO PUBLIC.QUESTION (ID, BODY, CORRECT_ANSWER_ID, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
+INSERT INTO PUBLIC.QUESTION (ID, BODY, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
                              CODE_ATTACHMENT, CODE_LANG, PUBLISHED)
-VALUES (2, 'Jaki jest poprawny kod JavaScript do zmiany zwartości elementu HTML przedstawionego niżej?', 5, null, 2, 1,
+VALUES (2, 'Jaki jest poprawny kod JavaScript do zmiany zwartości elementu HTML przedstawionego niżej?', null, 2, 1,
         '<p id="demo">This is a demonstration.</p>', 'html', false);
-
-INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID)
-VALUES (6, 'document.getElementByName("p").innerHTML = "Hello World!";', 2);
-INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID)
-VALUES (7, '#demo.innerHTML = "Hello World!";', 2);
-INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID)
-VALUES (8, 'document.getElement("p").innerHTML = "Hello World!";', 2);
+INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE, CORRECT)
+VALUES (5, ' document.getElementById("demo").innerHTML = "Hel, falselo World!";', 2, null, true);
+INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CORRECT)
+VALUES (6, 'document.getElementByName("p").innerHTML = "Hello World!";', 2, false);
+INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CORRECT)
+VALUES (7, '#demo.innerHTML = "Hello World!";', 2, false);
+INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CORRECT)
+VALUES (8, 'document.getElement("p").innerHTML = "Hello World!";', 2, false);
 
 -- Technology 2
 INSERT INTO PUBLIC.TECHNOLOGY (ID, CREATE_DATE, UPDATE_DATE, DESCRIPTION, IMAGE, NAME)
@@ -61,27 +58,22 @@ VALUES (2, '2021-11-10 20:18:34.188138', '2021-11-10 20:26:08.386956',
         'c031203d-8f16-4c1d-8850-1ad318890e28.png', 'Java');
 
 -- Technology 2 Question 1
-INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
-VALUES (9, ' System.out.println("Hello World");', null, null);
-
-INSERT INTO PUBLIC.QUESTION (ID, BODY, CORRECT_ANSWER_ID, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
+INSERT INTO PUBLIC.QUESTION (ID, BODY, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
                              CODE_ATTACHMENT, CODE_LANG, PUBLISHED)
-VALUES (3, 'Jaki jest poprawna składnia do wypisania "Hello World w Javie?', 5, null, 1, 2, null, null, true);
-
-INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID)
-VALUES (10, ' echo("Hello World");', 3);
-INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
-VALUES (11, ' Console.WriteLine("Hello World");', 3, null);
-INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
-VALUES (12, ' print ("Hello World");', 3, null);
+VALUES (3, 'Jaki jest poprawna składnia do wypisania "Hello World w Javie?', null, 1, 2, null, null, true);
+INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE, CORRECT)
+VALUES (9, ' System.out.println("Hello World");', 3, null, true);
+INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CORRECT)
+VALUES (10, ' echo("Hello World");', 3, false);
+INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE, CORRECT)
+VALUES (11, ' Console.WriteLine("Hello World");', 3, null, false);
+INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE, CORRECT)
+VALUES (12, ' print ("Hello World");', 3, null, false);
 
 -- Technology 2 Question 2
-INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
-VALUES (13, ' e d c b a -1', null, null);
-
-INSERT INTO PUBLIC.QUESTION (ID, BODY, CORRECT_ANSWER_ID, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
+INSERT INTO PUBLIC.QUESTION (ID, BODY, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
                              CODE_ATTACHMENT, CODE_LANG, PUBLISHED)
-VALUES (4, 'Co wypisze kod?', 5, null, 3, 2, 'import java.util.Arrays;
+VALUES (4, 'Co wypisze kod?', null, 3, 2, 'import java.util.Arrays;
 import java.util.Comparator;
 public class ComparatorTest {
 public static void main(String args[])
@@ -101,13 +93,14 @@ return s2.compareTo(s1);
 }
 }
 }', 'java', true);
-
-INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID)
-VALUES (14, ' a b c 0 e d', 4);
-INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
-VALUES (15, ' d b c e a 1', 4, null);
-INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE)
-VALUES (16, ' e b a d c', 4, null);
+INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE, CORRECT)
+VALUES (13, ' e d c b a -1', 4, null, true);
+INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CORRECT)
+VALUES (14, ' a b c 0 e d', 4, false);
+INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CORRECT)
+VALUES (15, ' d b c e a 1', 4, false);
+INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CORRECT)
+VALUES (16, ' e b a d c', 4, false);
 
 
 INSERT INTO PUBLIC.USER_ATTEMPT (ID, END_DATE, GAME_TYPE, START_DATE, TECHNOLOGY_ID, USER_ACCOUNT_EMAIL)

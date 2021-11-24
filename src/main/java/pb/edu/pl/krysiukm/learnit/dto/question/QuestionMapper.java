@@ -7,18 +7,13 @@ import pb.edu.pl.krysiukm.learnit.model.ProgressWrapper;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 public class QuestionMapper {
 
     public QuestionRequestResponseDto mapToDto(ProgressWrapper<Question> entity) {
         Question question = entity.getEntry();
-        List<Answer> answers = Stream.concat(
-                        question.getBadAnswers().stream(),
-                        Stream.of(question.getCorrectAnswer()))
-                .collect(Collectors.toList());
+        List<Answer> answers = question.getAnswers();
 
         Collections.shuffle(answers);
 

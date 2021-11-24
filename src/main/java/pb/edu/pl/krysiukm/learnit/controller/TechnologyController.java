@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pb.edu.pl.krysiukm.learnit.dto.TechnologyDto;
+import pb.edu.pl.krysiukm.learnit.entity.Question;
 import pb.edu.pl.krysiukm.learnit.entity.Technology;
 import pb.edu.pl.krysiukm.learnit.service.FileResolver;
 import pb.edu.pl.krysiukm.learnit.service.QuestionService;
@@ -65,11 +66,17 @@ public class TechnologyController {
                 .id(technology.getId())
                 .name(technology.getName())
                 .description(technology.getDescription())
-                .questionCount(technology.getQuestions().size());
+                .questionCount(countPublishedQuestions(technology));
 
         Optional.ofNullable(technology.getImage())
                 .ifPresent((image) -> builder.image(fileResolver.resolveFile(image)));
 
         return builder.build();
+    }
+
+    private long countPublishedQuestions(Technology technology) {
+        return technology.getQuestions().stream()
+                .filter(Question::isPublished)
+                .count();
     }
 }

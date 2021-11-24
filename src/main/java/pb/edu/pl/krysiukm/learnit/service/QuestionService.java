@@ -71,18 +71,18 @@ public class QuestionService {
         Technology technology = technologyService.getById(technologyId);
 
 
-        List<Answer> badAnswers = createRequestDto.getBadAnswers().stream()
+        List<Answer> answers = createRequestDto.getBadAnswers().stream()
                 .map(answerPayload -> new Answer(answerPayload.getBody(), answerPayload.getCode()))
                 .collect(Collectors.toList());
 
+        answers.add(correctAnswer);
         Question question = Question.builder()
                 .body(createRequestDto.getBody())
                 .codeAttachment(createRequestDto.getCodeAttachment())
                 .codeLang(createRequestDto.getCodeLang())
-                .correctAnswer(correctAnswer)
                 .technology(technology)
                 .difficulty(createRequestDto.getDifficultyValue())
-                .badAnswers(badAnswers)
+                .answers(answers)
                 .published(false)
                 .build();
 

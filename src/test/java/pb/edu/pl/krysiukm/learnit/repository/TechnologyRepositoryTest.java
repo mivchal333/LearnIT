@@ -26,11 +26,10 @@ class TechnologyRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        ANY_TECHNOLOGY = new Technology("name", "desc", "image.jpg", Collections.emptyList());
+        ANY_TECHNOLOGY = new Technology("name", "desc", "image.jpg");
         ANY_ANSWER = new Answer("body", "code");
 
-        ANY_QUESTION = new Question("body", "code", "codeaLang", ANY_ANSWER, null, null, 1, Collections.emptyList());
-        ANY_QUESTION.setCorrectAnswer(ANY_ANSWER);
+        ANY_QUESTION = new Question("body", "code", "codeaLang", null, null, 1, Collections.emptyList());
         ANY_QUESTION.setTechnology(ANY_TECHNOLOGY);
 
         ANY_TECHNOLOGY.setQuestions(Collections.singletonList(ANY_QUESTION));

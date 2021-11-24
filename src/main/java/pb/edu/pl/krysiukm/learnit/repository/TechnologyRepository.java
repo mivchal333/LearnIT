@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface TechnologyRepository extends JpaRepository<Technology, Long> {
     List<Technology> findByQuestions_PublishedEquals(@NonNull boolean published);
+
 }

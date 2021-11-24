@@ -13,7 +13,6 @@ import pb.edu.pl.krysiukm.learnit.repository.QuestionRepository;
 import pb.edu.pl.krysiukm.learnit.repository.ShowedQuestionRepository;
 import pb.edu.pl.krysiukm.learnit.repository.TechnologyRepository;
 import pb.edu.pl.krysiukm.learnit.repository.UserAttemptRepository;
-import pb.edu.pl.krysiukm.learnit.service.exception.FileDeleteException;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,18 +53,16 @@ public class TechnologyService {
     public void remove(Long id) {
         Technology entity = technologyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found technology with id: " + id));
-
-        userAttemptRepository.deleteAllByTechnologyId(id);
-        questionRepository.deleteAllByTechnologyId(id);
-
-        try {
-            Optional.ofNullable(entity.getImage())
-                    .ifPresent(storageService::deleteFile);
-        } catch (FileDeleteException e) {
-            log.error("[TechnologyService] Failed to delete image. Skipping...", e);
-        }
+        String image = entity.getImage();
 
         technologyRepository.deleteById(id);
+
+        try {
+            Optional.ofNullable(image)
+                    .ifPresent(storageService::deleteFile);
+        } catch (Exception e) {
+            log.error("[TechnologyService] Failed to delete image. Skipping...", e);
+        }
     }
 
     public Technology update(Long id, Technology technology) {

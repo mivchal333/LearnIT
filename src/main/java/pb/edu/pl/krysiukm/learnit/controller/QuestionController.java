@@ -98,6 +98,7 @@ public class QuestionController {
         questionService.delete(id);
     }
 
+    @PreAuthorize("isAuthenticated() and hasAnyRole('ROLE_ADMIN', 'ROLE_MOD')")
     @PostMapping("/{id}/published")
     public void setPublishState(@PathVariable Long id, @RequestBody ChangePublishStatePayload payload) {
         questionService.setPublishState(id, payload.isPublished());

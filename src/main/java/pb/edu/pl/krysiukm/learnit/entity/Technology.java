@@ -26,4 +26,14 @@ public class Technology extends AbstractEntity {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "technology")
     private List<Question> questions;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "technology")
+    private List<UserAttempt> userAttempts;
+
+    public Technology(String name, String description, String image) {
+        this.name = name;
+        this.description = description;
+        this.image = image;
+    }
 }
