@@ -2,7 +2,6 @@ package pb.edu.pl.krysiukm.learnit.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import pb.edu.pl.krysiukm.learnit.entity.UserAttempt;
 
 import java.util.List;
 
@@ -13,5 +12,4 @@ public class UserAttemptDto {
     private List<HistoryEntryDto> history;
     private Long startDate;
     private Long endDate;
-    private UserAttempt.GameType gameType;
 }

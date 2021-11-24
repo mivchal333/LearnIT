@@ -6,10 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Getter
@@ -28,7 +25,12 @@ public class Technology extends AbstractEntity {
     private List<Question> questions;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "technology")
+    @JoinTable(
+            name = "TECHNOLOGY_USER_ATTEMPT",
+            joinColumns = @JoinColumn(name = "TECHNOLOGY_ID"),
+            inverseJoinColumns = @JoinColumn(name = "USER_ATTEMPT_ID")
+    )
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<UserAttempt> userAttempts;
 
     public Technology(String name, String description, String image) {

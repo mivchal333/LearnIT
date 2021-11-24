@@ -12,9 +12,7 @@ import java.util.List;
 public interface UserAttemptRepository extends CrudRepository<UserAttempt, String> {
     List<UserAttempt> findAllByUserAccount(UserAccount userAccount);
 
-    List<UserAttempt> findAllByUserAccountAndTechnologyOrderByStartDateDesc(UserAccount userAccount, Technology technology);
-
-    void deleteAllByTechnologyId(Long id);
+    List<UserAttempt> findAllByUserAccountAndTechnologiesInOrderByStartDateDesc(UserAccount userAccount, List<Technology> technologies);
 
     List<UserAttempt> findAllByUserAccountOrderByStartDateDesc(UserAccount userAccount);
 

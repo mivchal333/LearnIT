@@ -11,9 +11,9 @@ import java.util.List;
 
 @Repository
 public interface QuestionRepository extends CrudRepository<Question, Long> {
-    List<Question> findAllByTechnologyAndIdNotInAndPublishedTrue(Technology technology, List<Long> questionIds);
+    List<Question> findAllByTechnologyInAndIdNotInAndPublishedTrue(List<Technology> technologies, List<Long> questionIds);
 
-    List<Question> findAllByTechnologyAndPublishedTrue(Technology technology);
+    List<Question> findAllByTechnologyInAndPublishedTrue(List<Technology> technologies);
 
     long countAllByTechnologyId(Long technologyId);
 

@@ -13,7 +13,6 @@ public class UserAttemptMapper {
     public UserAttemptDto mapToDto(UserAttempt userAttempt) {
         UserAttemptDto.UserAttemptDtoBuilder builder = UserAttemptDto.builder()
                 .id(userAttempt.getId())
-                .gameType(userAttempt.getGameType())
                 .startDate(userAttempt.getStartDate().toEpochMilli());
 
         List<HistoryEntryDto> history = userAttempt.getHistoryEntries()

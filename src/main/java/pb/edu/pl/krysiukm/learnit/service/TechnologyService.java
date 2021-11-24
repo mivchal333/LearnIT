@@ -50,6 +50,10 @@ public class TechnologyService {
                 }).collect(Collectors.toList());
     }
 
+    public List<Technology> findTechnologiesByIds(List<Long> ids) {
+        return technologyRepository.findAllById(ids);
+    }
+
     public void remove(Long id) {
         Technology entity = technologyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Not found technology with id: " + id));

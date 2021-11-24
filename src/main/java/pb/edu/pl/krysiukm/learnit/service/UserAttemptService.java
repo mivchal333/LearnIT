@@ -9,6 +9,7 @@ import pb.edu.pl.krysiukm.learnit.service.exception.NotFoundException;
 
 import java.time.Clock;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,10 +20,15 @@ public class UserAttemptService {
     private final TechnologyService technologyService;
     private final UserRepository userRepository;
 
-    public UserAttempt startQuizAttempt(UserAccount userAccount, Long technologyId) {
-        Technology technologyEntity = technologyService.getById(technologyId);
-        UserAttempt attempt = new UserAttempt(userAccount, technologyEntity, UserAttempt.GameType.QUIZ);
+    public UserAttempt startQuizAttempt(UserAccount userAccount, List<Long> technologyIds) {
+        List<Technology> technologies = technologyService.findTechnologiesByIds(technologyIds);
+        UserAttempt attempt = new UserAttempt(userAccount, technologies);
         attempt.setStartDate(clock.instant());
+
+        technologies.forEach(technology -> {
+            technology.getUserAttempts().add(attempt);
+        });
+
         return userAttemptRepository.save(attempt);
     }
 
@@ -55,7 +61,15 @@ public class UserAttemptService {
     public List<UserAttempt> getUserHistory(UserAccount userAccount, Long technologyId) {
         Technology technologyEntity = technologyService.getById(technologyId);
 
-        return userAttemptRepository.findAllByUserAccountAndTechnologyOrderByStartDateDesc(userAccount, technologyEntity);
+        List<UserAttempt> allTechnologiesAttempts = userAttemptRepository.findAllByUserAccountOrderByStartDateDesc(userAccount);
+
+        return allTechnologiesAttempts.stream()
+                .filter(filterSingleTechnologyAttemptById(technologyId))
+                .collect(Collectors.toList());
+    }
+
+    private Predicate<UserAttempt> filterSingleTechnologyAttemptById(Long technologyId) {
+        return userAttempt -> userAttempt.getTechnologies().size() == 1 && userAttempt.getTechnologies().get(0).getId() == technologyId;
     }
 
     public List<UserAttempt> getUserHistory(UserAccount userAccount) {

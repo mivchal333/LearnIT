@@ -9,6 +9,7 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -32,8 +33,8 @@ public class UserAttempt {
     private UserAccount userAccount;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Technology technology;
+    @ManyToMany(mappedBy = "userAttempts", cascade = CascadeType.ALL)
+    private List<Technology> technologies;
 
     @Column(nullable = false)
     private Instant startDate;
@@ -41,20 +42,11 @@ public class UserAttempt {
     @Nullable
     private Instant endDate;
 
-    @Enumerated(EnumType.STRING)
-    private GameType gameType;
-
     @OneToOne(cascade = CascadeType.REMOVE)
     private ShowedQuestion showedQuestion;
 
-    public UserAttempt(UserAccount userAccount, Technology technology, GameType gameType) {
+    public UserAttempt(UserAccount userAccount, List<Technology> technologies) {
         this.userAccount = userAccount;
-        this.technology = technology;
-        this.gameType = gameType;
-    }
-
-    public enum GameType {
-        QUIZ,
-        CARDS
+        this.technologies = technologies;
     }
 }

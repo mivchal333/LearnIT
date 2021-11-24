@@ -103,16 +103,17 @@ public class QuestionService {
         }
 
         List<Long> exposedQuestionsIds = userAttemptService.getExposedQuestions(attemptId)
-                .stream().map(Question::getId)
+                .stream()
+                .map(Question::getId)
                 .collect(Collectors.toList());
 
-        Technology technologyEntity = userAttempt.getTechnology();
+        List<Technology> technologies = userAttempt.getTechnologies();
 
         List<Question> foundQuestions;
         if (exposedQuestionsIds.isEmpty()) {
-            foundQuestions = questionRepository.findAllByTechnologyAndPublishedTrue(technologyEntity);
+            foundQuestions = questionRepository.findAllByTechnologyInAndPublishedTrue(technologies);
         } else {
-            foundQuestions = questionRepository.findAllByTechnologyAndIdNotInAndPublishedTrue(technologyEntity, exposedQuestionsIds);
+            foundQuestions = questionRepository.findAllByTechnologyInAndIdNotInAndPublishedTrue(technologies, exposedQuestionsIds);
         }
 
         if (foundQuestions.isEmpty()) {
@@ -129,7 +130,7 @@ public class QuestionService {
         return ProgressWrapper.<Question>builder()
                 .entry(randomQuestion)
                 .actual(userAttemptService.getExposedQuestions(attemptId).size())
-                .total(questionRepository.findAllByTechnologyAndPublishedTrue(technologyEntity).size())
+                .total(questionRepository.findAllByTechnologyInAndPublishedTrue(technologies).size())
                 .build();
     }
 

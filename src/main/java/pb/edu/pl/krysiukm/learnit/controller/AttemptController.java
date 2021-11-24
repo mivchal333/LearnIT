@@ -21,13 +21,13 @@ public class AttemptController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<UserAttempt> startAttempt(@RequestParam Long technologyId,
+    public ResponseEntity<UserAttempt> startAttempt(@RequestParam("technologyId") List<Long> technologyIds,
                                                     @AuthenticationPrincipal User user) {
         String email = user.getUsername();
         UserAccount userAccount = userService.getUserAccount(email)
                 .orElseThrow(() -> new NotFoundException("User with email " + email + " not found."));
 
-        UserAttempt attempt = userAttemptService.startQuizAttempt(userAccount, technologyId);
+        UserAttempt attempt = userAttemptService.startQuizAttempt(userAccount, technologyIds);
         return ResponseEntity.ok(attempt);
     }
 
