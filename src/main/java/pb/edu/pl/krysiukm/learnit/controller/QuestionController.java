@@ -41,7 +41,7 @@ public class QuestionController {
                                             @AuthenticationPrincipal User user
     ) {
         try {
-            Question question = questionService.createQuestion(technologyId, questionResponseDto);
+            Question question = questionService.createQuestion(technologyId, questionResponseDto, user);
             return ResponseEntity.ok(question);
         } catch (Exception e) {
             log.error("[QuestionController] Create question error", e);

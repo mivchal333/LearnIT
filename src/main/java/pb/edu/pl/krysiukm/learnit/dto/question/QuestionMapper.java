@@ -34,6 +34,7 @@ public class QuestionMapper {
                 .body(question.getBody())
                 .difficulty(question.getDifficulty())
                 .published(question.isPublished())
+                .creatorEmail(question.getCreator().getEmail())
                 .build();
     }
 }

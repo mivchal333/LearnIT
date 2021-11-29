@@ -3,6 +3,7 @@ package pb.edu.pl.krysiukm.learnit.service;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException;
@@ -63,7 +64,7 @@ public class QuestionService {
         questionRepository.deleteById(id);
     }
 
-    public Question createQuestion(Long technologyId, QuestionCreateRequestDto createRequestDto) {
+    public Question createQuestion(Long technologyId, QuestionCreateRequestDto createRequestDto, User user) {
 
         AnswerPayload correctAnswerPayload = createRequestDto.getCorrectAnswer();
         Answer correctAnswer = new Answer(correctAnswerPayload.getBody(), correctAnswerPayload.getCode(), true);
@@ -76,6 +77,10 @@ public class QuestionService {
                 .collect(Collectors.toList());
 
         answers.add(correctAnswer);
+
+        UserAccount userAccount = userService.getUserAccount(user.getUsername())
+                .orElseThrow(() -> new ResourceNotFoundException("Not found creator!"));
+
         Question question = Question.builder()
                 .body(createRequestDto.getBody())
                 .codeAttachment(createRequestDto.getCodeAttachment())
@@ -84,6 +89,7 @@ public class QuestionService {
                 .difficulty(createRequestDto.getDifficultyValue())
                 .answers(answers)
                 .published(false)
+                .creator(userAccount)
                 .build();
 
         return createQuestion(question);

@@ -10,18 +10,21 @@ public class QuestionPreviewDto {
     private String body;
     private int difficulty;
     private boolean published;
+    private String creatorEmail;
+
+    @Builder
+    public QuestionPreviewDto(Long id, String body, int difficulty, boolean published, String creatorEmail) {
+        this.id = id;
+        this.body = body;
+        this.difficulty = difficulty;
+        this.published = published;
+        this.creatorEmail = creatorEmail;
+    }
 
     public QuestionPreviewDto(Question question) {
         this.id = question.getId();
         this.body = question.getBody();
         this.difficulty = question.getDifficulty();
-    }
-
-    @Builder
-    public QuestionPreviewDto(Long id, String body, int difficulty, boolean published) {
-        this.id = id;
-        this.body = body;
-        this.difficulty = difficulty;
-        this.published = published;
+        this.creatorEmail = question.getCreator().getEmail();
     }
 }

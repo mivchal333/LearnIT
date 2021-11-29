@@ -47,7 +47,8 @@ VALUES (4, '<scriptiong', 1, null, false);
 -- Technology 1 Question 2
 INSERT INTO PUBLIC.QUESTION (ID, BODY, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
                              CODE_ATTACHMENT, CODE_LANG, PUBLISHED)
-VALUES (2, 'Jaki jest poprawny kod JavaScript do zmiany zwartości elementu HTML przedstawionego niżej?', null, 2, 1,
+VALUES (2, 'Jaki jest poprawny kod JavaScript do zmiany zwartości elementu HTML przedstawionego niżej?',
+        'admin@admin.com', 2, 1,
         '<p id="demo">This is a demonstration.</p>', 'html', false);
 INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE, CORRECT)
 VALUES (5, ' document.getElementById("demo").innerHTML = "Hel, falselo World!";', 2, null, true);
@@ -67,7 +68,7 @@ VALUES (2, '2021-11-10 20:18:34.188138', '2021-11-10 20:26:08.386956',
 -- Technology 2 Question 1
 INSERT INTO PUBLIC.QUESTION (ID, BODY, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
                              CODE_ATTACHMENT, CODE_LANG, PUBLISHED)
-VALUES (3, 'Jaki jest poprawna składnia do wypisania "Hello World w Javie?', null, 1, 2, null, null, true);
+VALUES (3, 'Jaki jest poprawna składnia do wypisania "Hello World w Javie?', 'admin@admin.com', 1, 2, null, null, true);
 INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CODE, CORRECT)
 VALUES (9, ' System.out.println("Hello World");', 3, null, true);
 INSERT INTO PUBLIC.ANSWER (ID, BODY, QUESTION_ID, CORRECT)
@@ -80,7 +81,7 @@ VALUES (12, ' print ("Hello World");', 3, null, false);
 -- Technology 2 Question 2
 INSERT INTO PUBLIC.QUESTION (ID, BODY, CREATOR_EMAIL, DIFFICULTY, TECHNOLOGY_ID,
                              CODE_ATTACHMENT, CODE_LANG, PUBLISHED)
-VALUES (4, 'Co wypisze kod?', null, 3, 2, 'import java.util.Arrays;
+VALUES (4, 'Co wypisze kod?', 'admin@admin.com', 3, 2, 'import java.util.Arrays;
 import java.util.Comparator;
 public class ComparatorTest {
 public static void main(String args[])
