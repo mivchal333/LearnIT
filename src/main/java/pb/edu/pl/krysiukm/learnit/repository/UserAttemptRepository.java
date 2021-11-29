@@ -6,6 +6,7 @@ import pb.edu.pl.krysiukm.learnit.entity.Technology;
 import pb.edu.pl.krysiukm.learnit.entity.UserAccount;
 import pb.edu.pl.krysiukm.learnit.entity.UserAttempt;
 
+import java.time.Instant;
 import java.util.List;
 
 @Repository
@@ -15,5 +16,7 @@ public interface UserAttemptRepository extends CrudRepository<UserAttempt, Strin
     List<UserAttempt> findAllByUserAccountAndTechnologiesInOrderByStartDateDesc(UserAccount userAccount, List<Technology> technologies);
 
     List<UserAttempt> findAllByUserAccountOrderByStartDateDesc(UserAccount userAccount);
+
+    List<UserAttempt> findAllByUserAccountAndStartDateAfterOrderByStartDateDesc(UserAccount userAccount, Instant date);
 
 }

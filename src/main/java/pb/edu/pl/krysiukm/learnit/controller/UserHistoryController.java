@@ -14,6 +14,7 @@ import pb.edu.pl.krysiukm.learnit.service.UserAttemptService;
 import pb.edu.pl.krysiukm.learnit.service.UserService;
 import pb.edu.pl.krysiukm.learnit.service.exception.NotFoundException;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,17 +29,22 @@ public class UserHistoryController {
 
     @GetMapping
     public ResponseEntity<?> getUserHistoryByTechnology(@RequestParam Long technologyId,
-                                                        @AuthenticationPrincipal User user) {
+                                                        @AuthenticationPrincipal User user,
+                                                        @RequestParam(required = false) Long date) {
         String email = user.getUsername();
         UserAccount userAccount = userService.getUserAccount(email)
                 .orElseThrow(() -> new NotFoundException("User with email " + email + " not found."));
 
-        List<UserAttemptDto> userHistory = userAttemptService.getUserHistory(userAccount, technologyId)
+        List<UserAttempt> userHistory = date == null
+                ? userAttemptService.getUserHistory(userAccount, technologyId)
+                : userAttemptService.getUserHistory(userAccount, technologyId, Instant.ofEpochMilli(date));
+
+        List<UserAttemptDto> userAttemptDtos = userHistory
                 .stream()
                 .map(userAttemptMapper::mapToDto)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(userHistory);
+        return ResponseEntity.ok(userAttemptDtos);
     }
 
     @GetMapping("/{id}")

@@ -3,13 +3,14 @@ package pb.edu.pl.krysiukm.learnit.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pb.edu.pl.krysiukm.learnit.entity.*;
+import pb.edu.pl.krysiukm.learnit.repository.HistoryEntryRepository;
 import pb.edu.pl.krysiukm.learnit.repository.UserAttemptRepository;
 import pb.edu.pl.krysiukm.learnit.repository.UserRepository;
 import pb.edu.pl.krysiukm.learnit.service.exception.NotFoundException;
 
 import java.time.Clock;
+import java.time.Instant;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,6 +20,7 @@ public class UserAttemptService {
     private final UserAttemptRepository userAttemptRepository;
     private final TechnologyService technologyService;
     private final UserRepository userRepository;
+    private final HistoryEntryRepository historyEntryRepository;
 
     public UserAttempt startQuizAttempt(UserAccount userAccount, List<Long> technologyIds) {
         List<Technology> technologies = technologyService.findTechnologiesByIds(technologyIds);
@@ -59,20 +61,13 @@ public class UserAttemptService {
     }
 
     public List<UserAttempt> getUserHistory(UserAccount userAccount, Long technologyId) {
-        Technology technologyEntity = technologyService.getById(technologyId);
+        Technology technology = technologyService.getById(technologyId);
+        return userAttemptRepository.findAllByUserAccountAndTechnologiesInOrderByStartDateDesc(userAccount, List.of(technology));
+    }
 
-        List<UserAttempt> allTechnologiesAttempts = userAttemptRepository.findAllByUserAccountOrderByStartDateDesc(userAccount);
-
-        return allTechnologiesAttempts.stream()
-                .filter(filterSingleTechnologyAttemptById(technologyId))
+    public List<UserAttempt> getUserHistory(UserAccount userAccount, Long technologyId, Instant date) {
+        return this.getUserHistory(userAccount, technologyId)
+                .stream().filter(userAttempt -> userAttempt.getStartDate().isAfter(date))
                 .collect(Collectors.toList());
-    }
-
-    private Predicate<UserAttempt> filterSingleTechnologyAttemptById(Long technologyId) {
-        return userAttempt -> userAttempt.getTechnologies().size() == 1 && userAttempt.getTechnologies().get(0).getId() == technologyId;
-    }
-
-    public List<UserAttempt> getUserHistory(UserAccount userAccount) {
-        return userAttemptRepository.findAllByUserAccountOrderByStartDateDesc(userAccount);
     }
 }
