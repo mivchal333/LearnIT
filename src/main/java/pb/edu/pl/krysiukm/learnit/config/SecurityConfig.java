@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.Http403ForbiddenEntryPoin
 import pb.edu.pl.krysiukm.learnit.security.AuthenticationSuccessHandler;
 import pb.edu.pl.krysiukm.learnit.security.LogoutSuccessHandler;
 import pb.edu.pl.krysiukm.learnit.security.MyUserDetailsService;
+import pb.edu.pl.krysiukm.learnit.security.SimpleAuthenticationFailureHandler;
 
 @RequiredArgsConstructor
 @EnableWebSecurity(debug = true)
@@ -44,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/user/login")
                 .successHandler(new AuthenticationSuccessHandler())
+                .failureHandler(new SimpleAuthenticationFailureHandler())
                 .and()
                 .logout()
                 .logoutUrl("/user/logout")

@@ -21,7 +21,7 @@ public class Question {
 
     @Column(length = 999)
     private String body;
-    @Column(length = 999)
+    @Column(length = 2000)
     private String codeAttachment;
     private String codeLang;
     private boolean published;

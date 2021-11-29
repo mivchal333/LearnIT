@@ -66,7 +66,7 @@ public class QuestionService {
     public Question createQuestion(Long technologyId, QuestionCreateRequestDto createRequestDto) {
 
         AnswerPayload correctAnswerPayload = createRequestDto.getCorrectAnswer();
-        Answer correctAnswer = new Answer(correctAnswerPayload.getBody(), correctAnswerPayload.getCode());
+        Answer correctAnswer = new Answer(correctAnswerPayload.getBody(), correctAnswerPayload.getCode(), true);
 
         Technology technology = technologyService.getById(technologyId);
 

@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException;
@@ -31,9 +33,13 @@ public class QuestionController {
     private final QuestionMapper questionMapper;
     private final TechnologyService technologyService;
 
+    @PreAuthorize("isAuthenticated() and hasRole('ROLE_USER')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<?> createQuestion(@RequestBody QuestionCreateRequestDto questionResponseDto, @RequestParam Long technologyId) {
+    public ResponseEntity<?> createQuestion(@RequestBody QuestionCreateRequestDto questionResponseDto,
+                                            @RequestParam Long technologyId,
+                                            @AuthenticationPrincipal User user
+    ) {
         try {
             Question question = questionService.createQuestion(technologyId, questionResponseDto);
             return ResponseEntity.ok(question);
@@ -42,6 +48,7 @@ public class QuestionController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 
     @GetMapping("/attempt")
     public ResponseEntity<?> getQuestion(@RequestParam String attemptId) {
