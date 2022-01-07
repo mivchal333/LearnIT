@@ -165,10 +165,6 @@ public class QuestionService {
         return new AnswerResult(false, "Bad answer");
     }
 
-    public long countQuestions(Long technologyId) {
-        return questionRepository.countAllByTechnologyId(technologyId);
-    }
-
     public void setPublishState(Long id, Boolean published) {
         questionRepository.setPublishedStateForQuestionId(id, published);
     }

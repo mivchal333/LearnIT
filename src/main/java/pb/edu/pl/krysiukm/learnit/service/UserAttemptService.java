@@ -2,10 +2,9 @@ package pb.edu.pl.krysiukm.learnit.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException;
 import pb.edu.pl.krysiukm.learnit.entity.*;
-import pb.edu.pl.krysiukm.learnit.repository.HistoryEntryRepository;
 import pb.edu.pl.krysiukm.learnit.repository.UserAttemptRepository;
-import pb.edu.pl.krysiukm.learnit.repository.UserRepository;
 import pb.edu.pl.krysiukm.learnit.service.exception.NotFoundException;
 
 import java.time.Clock;
@@ -19,8 +18,6 @@ public class UserAttemptService {
     private final Clock clock;
     private final UserAttemptRepository userAttemptRepository;
     private final TechnologyService technologyService;
-    private final UserRepository userRepository;
-    private final HistoryEntryRepository historyEntryRepository;
 
     public UserAttempt startQuizAttempt(UserAccount userAccount, List<Long> technologyIds) {
         List<Technology> technologies = technologyService.findTechnologiesByIds(technologyIds);
@@ -53,7 +50,7 @@ public class UserAttemptService {
 
     public UserAttempt getUserAttempt(String id) {
         return userAttemptRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("User attempt does not exist! Id:" + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User attempt does not exist! Id:" + id));
     }
 
     public List<UserAttempt> getUserAttempts(UserAccount userAccount) {

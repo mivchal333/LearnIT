@@ -9,10 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException;
 import pb.edu.pl.krysiukm.learnit.entity.Question;
 import pb.edu.pl.krysiukm.learnit.entity.Technology;
-import pb.edu.pl.krysiukm.learnit.repository.QuestionRepository;
-import pb.edu.pl.krysiukm.learnit.repository.ShowedQuestionRepository;
 import pb.edu.pl.krysiukm.learnit.repository.TechnologyRepository;
-import pb.edu.pl.krysiukm.learnit.repository.UserAttemptRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,10 +21,7 @@ import java.util.stream.Collectors;
 @Service
 public class TechnologyService {
     private final TechnologyRepository technologyRepository;
-    private final UserAttemptRepository userAttemptRepository;
-    private final QuestionRepository questionRepository;
     private final FilesStorageService storageService;
-    private final ShowedQuestionRepository showedQuestionRepository;
 
     public Technology getById(Long id) {
         return technologyRepository.findById(id)

@@ -19,7 +19,6 @@ import java.util.UUID;
 public class ServerFilesStorageService implements FilesStorageService {
     private final Path root = Paths.get("uploads");
 
-
     @Override
     public void init() {
         try {
