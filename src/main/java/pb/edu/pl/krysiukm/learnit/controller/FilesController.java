@@ -27,7 +27,7 @@ public class FilesController {
             UploadedFile uploadedFile = fileResolver.resolveFile(savedFileName);
             return ResponseEntity.status(HttpStatus.OK).body(uploadedFile);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cannot save file");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
