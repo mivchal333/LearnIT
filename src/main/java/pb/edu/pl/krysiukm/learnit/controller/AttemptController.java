@@ -13,8 +13,9 @@ import pb.edu.pl.krysiukm.learnit.service.exception.NotFoundException;
 
 import java.util.List;
 
-@RequiredArgsConstructor
+@CrossOrigin
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/attempt")
 public class AttemptController {
     private final UserAttemptService userAttemptService;
