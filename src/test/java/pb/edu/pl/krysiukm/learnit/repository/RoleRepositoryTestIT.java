@@ -27,14 +27,14 @@ public class RoleRepositoryTestIT {
 
     @Test
     void shouldReadRole() {
-        Role found = sut.findByName(ROLE_1);
+        Role found = sut.findByName(ROLE_1).get();
 
         assertEquals(ROLE_1, found.getName());
     }
 
     @Test
     void shouldDeleteRole() {
-        Role role1 = sut.findByName(ROLE_1);
+        Role role1 = sut.findByName(ROLE_1).get();
         sut.delete(role1);
 
         assertNull(sut.findByName(ROLE_1));

@@ -3,6 +3,7 @@ package pb.edu.pl.krysiukm.learnit.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pb.edu.pl.krysiukm.learnit.controller.exception.ResourceNotFoundException;
 import pb.edu.pl.krysiukm.learnit.controller.exception.UserAlreadyExistException;
 import pb.edu.pl.krysiukm.learnit.dto.UserDto;
 import pb.edu.pl.krysiukm.learnit.entity.Role;
@@ -35,8 +36,9 @@ public class UserService {
         userAccount.setLastName(accountDto.getLastName());
         userAccount.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         userAccount.setEmail(accountDto.getEmail());
-        List<Role> userRoles = List.of(roleRepository.findByName(AppRole.ROLE_USER.name()));
-        userAccount.setRoles(userRoles);
+        Role userRole = roleRepository.findByName(AppRole.ROLE_USER.name())
+                .orElseThrow(() -> new ResourceNotFoundException("Not found USER role!"));
+        userAccount.setRoles(List.of(userRole));
         return userRepository.save(userAccount);
     }
 
@@ -68,7 +70,9 @@ public class UserService {
         Optional<UserAccount> userOpt = userRepository.findByEmail(userEmail);
         UserAccount userAccount = userOpt.orElseThrow(() -> new NotFoundException("Not found user with that email"));
 
-        Role role = roleRepository.findByName(roleToGrant.name());
+        Role role = roleRepository.findByName(roleToGrant.name())
+                .orElseThrow(() -> new ResourceNotFoundException("Not found role to grant!"));
+
         userAccount.getRoles().add(role);
     }
 

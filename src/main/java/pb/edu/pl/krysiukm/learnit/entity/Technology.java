@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -22,7 +23,7 @@ public class Technology extends AbstractEntity {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "technology")
-    private List<Question> questions;
+    private List<Question> questions = new ArrayList<>();
 
     @JsonIgnore
     @JoinTable(
@@ -31,7 +32,7 @@ public class Technology extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "USER_ATTEMPT_ID")
     )
     @ManyToMany(cascade = CascadeType.ALL)
-    private List<UserAttempt> userAttempts;
+    private List<UserAttempt> userAttempts = new ArrayList<>();
 
     public Technology(String name, String description, String image) {
         this.name = name;
