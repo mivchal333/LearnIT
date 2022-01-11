@@ -39,6 +39,7 @@ public class ServerFilesStorageService implements FilesStorageService {
             Files.copy(file.getInputStream(), this.root.resolve(filename));
             return filename;
         } catch (Exception e) {
+            log.error("[ServerFilesStorageService] File save error", e);
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
     }
