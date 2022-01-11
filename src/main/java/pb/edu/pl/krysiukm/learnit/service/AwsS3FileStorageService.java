@@ -34,11 +34,6 @@ public class AwsS3FileStorageService implements FilesStorageService {
     }
 
     @Override
-    public void init() {
-
-    }
-
-    @Override
     public String save(MultipartFile file) {
         String randomId = UUID.randomUUID().toString();
 
@@ -64,12 +59,7 @@ public class AwsS3FileStorageService implements FilesStorageService {
     }
 
     @Override
-    public Resource load(String filename) {
-        return null;
-    }
-
-    @Override
     public void deleteFile(String filename) {
-
+        amazonS3Client.deleteObject(bucketName, filename);
     }
 }
