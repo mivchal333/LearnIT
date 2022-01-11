@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@RequestMapping("/technology")
+@RequestMapping("/api/technology")
 @RestController
 public class TechnologyController {
     private final TechnologyService technologyService;

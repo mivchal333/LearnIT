@@ -20,7 +20,7 @@ import pb.edu.pl.krysiukm.learnit.service.exception.NoMoreQuestionsException;
 @RequiredArgsConstructor
 @Slf4j
 @RestController
-@RequestMapping("/card")
+@RequestMapping("/api/card")
 public class CardController {
     private final QuestionService questionService;
     private final CardMapper cardMapper;

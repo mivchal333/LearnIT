@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/history")
+@RequestMapping("/api/history")
 public class UserHistoryController {
     private final UserAttemptService userAttemptService;
     private final UserAttemptMapper userAttemptMapper;

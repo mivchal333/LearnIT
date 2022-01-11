@@ -18,7 +18,7 @@ import pb.edu.pl.krysiukm.learnit.security.MyUserDetailsService;
 import pb.edu.pl.krysiukm.learnit.security.SimpleAuthenticationFailureHandler;
 
 @RequiredArgsConstructor
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -41,15 +41,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().disable()
                 .authorizeRequests()
-                .antMatchers("/user/myAccount").authenticated()
+                .antMatchers("/api/user/myAccount").authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/user/login")
+                .loginPage("/api/user/login")
                 .successHandler(new AuthenticationSuccessHandler())
                 .failureHandler(new SimpleAuthenticationFailureHandler())
                 .and()
                 .logout()
-                .logoutUrl("/user/logout")
+                .logoutUrl("/api/user/logout")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessHandler(new LogoutSuccessHandler())

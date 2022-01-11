@@ -13,6 +13,7 @@ import pb.edu.pl.krysiukm.learnit.service.FileResolver;
 import pb.edu.pl.krysiukm.learnit.service.FilesStorageService;
 
 @Controller
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class FilesController {
 

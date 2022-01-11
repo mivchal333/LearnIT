@@ -16,7 +16,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/attempt")
+@RequestMapping("/api/attempt")
 public class AttemptController {
     private final UserAttemptService userAttemptService;
     private final UserService userService;
