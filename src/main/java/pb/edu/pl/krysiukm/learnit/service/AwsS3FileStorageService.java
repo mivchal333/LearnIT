@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.UUID;
 
-@Primary
 @Slf4j
 @Service
 public class AwsS3FileStorageService implements FilesStorageService {

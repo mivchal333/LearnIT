@@ -2,6 +2,8 @@ package pb.edu.pl.krysiukm.learnit.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -16,8 +18,18 @@ import java.util.UUID;
 
 @Slf4j
 @Service
+@Primary
+@Profile("dev")
 public class ServerFilesStorageService implements FilesStorageService {
     private final Path root = Paths.get("uploads");
+
+    public ServerFilesStorageService() {
+            try {
+                Files.createDirectory(root);
+            } catch (Exception e) {
+                throw new RuntimeException("Could not initialize folder for upload!");
+            }
+    }
 
     @Override
     public String save(MultipartFile file) {
