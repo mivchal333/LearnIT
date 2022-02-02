@@ -55,6 +55,7 @@ public class QuestionService {
         question.setDifficulty(createRequestDto.getDifficultyValue());
 
         question.setCodeAttachment(createRequestDto.getCodeAttachment());
+        question.setBody(createRequestDto.getBody());
         question.setCodeLang(createRequestDto.getCodeLang());
 
         return questionRepository.save(question);
