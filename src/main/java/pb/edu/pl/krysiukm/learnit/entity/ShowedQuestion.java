@@ -19,8 +19,7 @@ public class ShowedQuestion {
     @ManyToOne
     private Question question;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @OneToOne(mappedBy = "userAttempt")
     private UserAttempt userAttempt;
     private Instant date;
 

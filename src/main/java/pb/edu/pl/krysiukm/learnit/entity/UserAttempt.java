@@ -43,6 +43,7 @@ public class UserAttempt {
     private Instant endDate;
 
     @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "showed_question_id", referencedColumnName = "id")
     private ShowedQuestion showedQuestion;
 
     public UserAttempt(UserAccount userAccount, List<Technology> technologies) {
